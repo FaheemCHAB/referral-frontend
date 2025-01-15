@@ -1,0 +1,10 @@
+/* Add application styles & imports to this file! */
+body {
+  
+  font-family: Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
