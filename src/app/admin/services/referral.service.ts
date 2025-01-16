@@ -16,4 +16,10 @@ export class ReferralService {
   return this.http.get<Referral[]>(`${this.API_URL}/referral`);
   }
 
+  toggleReferralStatus(userId: string) {
+    return this.http.patch(`${this.API_URL}/referral/${userId}`, {
+      status: true
+    });
+  }
+
 }

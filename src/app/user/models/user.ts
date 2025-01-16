@@ -8,8 +8,8 @@ export interface User {
 export interface Referral {
   _id: string;
   name: string;
-  mobile: number | null;
-  status: string;
+  mobile: string;
+  isActive: boolean;
   email: string;
   place: string;
   age: number | null

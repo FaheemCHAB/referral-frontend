@@ -56,7 +56,7 @@ import {
 
       <!-- Users Table -->
       <div class="bg-blue-800 rounded-lg shadow overflow-hidden">
-        <div class="overflow-auto max-h-[400px]">
+        <div class="overflow-auto max-h-[400px] hide-scrollbar">
           <!-- Add this wrapper div -->
           <table class="min-w-full">
             <thead class="bg-blue-800">
@@ -102,13 +102,26 @@ import {
                 <td class="px-6 py-4 text-slate-200">{{ user.username }}</td>
                 <td class="px-6 py-4 text-slate-200">{{ user.password }}</td>
                 <td class="px-6 py-4 text-slate-200">
-                  <button
-                    (click)="toggleUserStatus(user)"
-                    [class]="user.isActive ? 'bg-green-500' : 'bg-red-500'"
-                    class="px-4 py-2 text-white rounded-lg"
+                <label class="relative inline-flex items-center cursor-pointer">
+                  <input
+                    type="checkbox"
+                    class="sr-only peer"
+                    [checked]="user.isActive"
+                    (change)="toggleUserStatus(user)"
+                  />
+                  <div
+                    class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-300 
+    rounded-full peer dark:bg-red-700 peer-checked:after:translate-x-full 
+    peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] 
+    after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 
+    after:transition-all dark:border-red-600 peer-checked:bg-green-500"
+                  ></div>
+                  <!-- <span
+                    class="ml-3 text-sm font-medium text-red-900 dark:text-gray-300"
                   >
-                    {{ user.isActive ? "Deactivate" : "Activate" }}
-                  </button>
+                    {{ user.isActive ? "Active" : "Inactive" }}
+                  </span> -->
+                </label>
                 </td>
               </tr>
               }
@@ -185,18 +198,6 @@ import {
                 name="mobile"
               >
               </ngx-intl-tel-input>
-              <!-- <input
-                type="tel"
-                [(ngModel)]="formData.mobile"
-                name="mobile"
-                pattern="^d{10}$"
-                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                required
-                #mobile="ngModel"
-              /> -->
-              <!-- <small class="text-red-500" *ngIf="mobile.invalid && mobile.touched">
-      Mobile number must be 10 digits.
-    </small> -->
             </div>
             <div class="mb-4">
               <label class="block text-gray-700 mb-2">Username</label>
@@ -340,7 +341,7 @@ export class UsersComponent {
   createUser() {
     this.userService.createUser(this.formData).subscribe((newUser: any) => {
       console.log(newUser);
-      this.users.push(newUser); // Add the new user to the beginning of the array
+      this.users.push(newUser); // Add the new user to the end of the array
       this.showCreateUserModal = false; // Close the modal
       this.resetFormData(); // Reset the form for future use
     });

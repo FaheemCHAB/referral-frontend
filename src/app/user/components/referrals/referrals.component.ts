@@ -26,7 +26,7 @@ import { ActivatedRoute, Router } from "@angular/router";
   <div *ngIf="referrals.length > 0; else noReferrals" class="max-w-6xl mx-auto p-6">
   <div class="bg-white rounded-xl shadow-lg p-8">
     <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">My Referrals</h2>
-    <div class="overflow-x-auto">
+    <div class="overflow-y-auto max-h-96 hide-scrollbar">
       <table class="min-w-full divide-y divide-gray-200 table-auto">
         <thead class="bg-gray-800 text-white">
           <tr>
@@ -45,10 +45,10 @@ import { ActivatedRoute, Router } from "@angular/router";
             <td class="px-4 py-2 text-sm text-gray-800">{{ referral.mobile }}</td>
             <td 
               class="px-4 py-2 text-sm font-medium"
-              [ngClass]="referral.status ? 'text-green-600' : 'text-red-600'">
-              {{ referral.status ? 'Active' : 'Inactive' }}
+              [ngClass]="referral.isActive ? 'text-green-600' : 'text-red-600'">
+              {{ referral.isActive ? 'Active' : 'Inactive' }}
             </td> 
-            <td class="px-6 py-4">
+            <td class="px-6 py-4 cursor-pointer">
                 <svg
                 (click)="showDetails(referral)"
             xmlns="http://www.w3.org/2000/svg"

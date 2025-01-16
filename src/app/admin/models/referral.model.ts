@@ -6,7 +6,7 @@ export interface Referral {
     name: string;
   };
   mobile: string;
-  status: string;
+  isActive: boolean;
   place: string;
   qualification: string;
   age: number;
