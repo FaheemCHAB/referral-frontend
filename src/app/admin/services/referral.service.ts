@@ -22,4 +22,13 @@ export class ReferralService {
     });
   }
 
+  searchReferralsByReferredBy(referredBy: string, startDate: string, endDate: string) {
+    return this.http.get<Referral[]>(`${this.API_URL}/referral/search-by-referred-by`, { params: { referredBy , startDate, endDate }  });
+
+  }
+
+  searchByName(name: string) {
+    return this.http.get<Referral[]>(`${this.API_URL}/referral/search-by-name`, { params: { name } });
+  }
+
 }

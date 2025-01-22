@@ -1,8 +1,9 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { ReferralService } from "../../services/referral.service";
 import { Referral } from "../../models/user";
 import { ActivatedRoute, Router } from "@angular/router";
+import { AuthService } from "../../../auth/service/auth.service";
 
 @Component({
   selector: "app-referrals",
@@ -20,6 +21,7 @@ import { ActivatedRoute, Router } from "@angular/router";
   </div>
 
   <button (click)="logout()" class="absolute top-4 right-4 bg-red-500 hover:bg-red-600 text-white font-semibold px-4 py-2 rounded-lg shadow-lg transition-all">
+  <i class="fas fa-lock mr-2"></i>
       Logout
     </button>
 
@@ -28,13 +30,13 @@ import { ActivatedRoute, Router } from "@angular/router";
     <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">My Referrals</h2>
     <div class="overflow-y-auto max-h-96 hide-scrollbar">
       <table class="min-w-full divide-y divide-gray-200 table-auto">
-        <thead class="bg-gray-800 text-white">
+        <thead class="bg-gray-800 text-white sticky top-0 z-10">
           <tr>
             <th class="px-4 py-2 text-left text-sm font-semibold tracking-wide">ID</th>
             <th class="px-4 py-2 text-left text-sm font-semibold tracking-wide">Name</th>
             <th class="px-4 py-2 text-left text-sm font-semibold tracking-wide">Mobile</th>
             <th class="px-4 py-2 text-left text-sm font-semibold tracking-wide">Status</th>
-            <th class="px-4 py-2 text-left text-sm font-semibold tracking-wide">Action</th>
+            <th class="px-4 py-2 text-left text-sm font-semibold tracking-wide">View More</th>
 
           </tr>
         </thead>
@@ -95,7 +97,7 @@ import { ActivatedRoute, Router } from "@angular/router";
         </div>
         <div class="flex justify-between items-center">
           <span class="font-semibold text-gray-700">Age:</span>
-          <span class="text-gray-600">{{ selectedReferral.age }}</span>
+          <span class="text-gray-600">   {{ calculateAge(selectedReferral.dob) }}</span>
         </div>
       </div>
       <div class="flex justify-end">
@@ -122,14 +124,15 @@ import { ActivatedRoute, Router } from "@angular/router";
 </div>
   `,
 })
-export class ReferralsComponent {
+export class ReferralsComponent implements OnInit {
   referrals: Referral[] = [];
   selectedReferral: Referral | null = null;
 
   constructor(
     private referralService: ReferralService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
@@ -153,7 +156,8 @@ export class ReferralsComponent {
   }
 
   logout() {
-    this.router.navigate(['/login']);
+    this.authService.logout();
+    this.router.navigate(['/auth/login']);
   }
 
   getReferralsByUserId(userId: string) {
@@ -168,4 +172,20 @@ export class ReferralsComponent {
       }
     );
   }
+
+    // Utility function to calculate age from DOB
+    calculateAge(dob: string): number {
+      const birthDate = new Date(dob);
+      const today = new Date();
+      let age = today.getFullYear() - birthDate.getFullYear();
+      const monthDifference = today.getMonth() - birthDate.getMonth();
+  
+      if (
+        monthDifference < 0 ||
+        (monthDifference === 0 && today.getDate() < birthDate.getDate())
+      ) {
+        age--;
+      }
+      return age;
+    }
 }

@@ -5,7 +5,7 @@ import { AdminRoutingModule } from './admin-routing.module';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { RouterModule } from '@angular/router';
 import { LoginComponent } from './components/login/login.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ReferralsComponent } from './components/referrals/referrals.component';
 import { UsersComponent } from './components/users/users.component';
 import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
@@ -22,6 +22,7 @@ import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
     CommonModule,
     AdminRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     NgxIntlTelInputModule
   ]  
 })

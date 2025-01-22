@@ -125,26 +125,12 @@ export class LoginComponent {
       this.router.navigate(['/admin/dashboard']);
       return;
     }
-    this.authService.authenticateUser(this.username, this.password).subscribe({
-      next: (user) => {
-        if (user) {
-          this.router.navigate(['/user/dashboard']);
-        } else {
-          this.errorMessage = 'Invalid login credentials';
-        }
-      },
-      error: (err) => {
-        if (err.status === 403) {
-          if (err.error?.message === 'Account deactivated') {
-            this.errorMessage = 'Your account has been deactivated. Please contact support.';
-          } else {
-            this.errorMessage = 'Invalid username or password.';
-          }
-        } else {
-          this.errorMessage = err.error?.message || 'An error occurred during login.';
-        }
-      },
-    });
+      this.authService.authenticateUser(this.username, this.password).subscribe({
+        next: () => this.router.navigate(['/user/dashboard']),
+        error: (err) => {
+          this.errorMessage = err.error?.message || 'An unexpected error occurred.';
+        },
+      });
   }
 
   goBack() {

@@ -12,7 +12,7 @@ export interface Referral {
   isActive: boolean;
   email: string;
   place: string;
-  age: number | null
+  dob: string;
   qualification: string;
   createdAt: Date;
 }
