@@ -9,12 +9,12 @@ import { BrowserModule } from "@angular/platform-browser";
 import { LandingPageComponent } from "./landing-page.component";
 import { AuthRoutingModule } from "./auth/auth-routing.module";
 import { NgxIntlTelInputModule } from "ngx-intl-tel-input";
-import { BsDropdownModule } from "ngx-bootstrap/dropdown";
+
 
 @NgModule({
     declarations: [
     AppComponent,
-    LandingPageComponent
+    LandingPageComponent,
     ],
     imports: [
         BrowserModule,

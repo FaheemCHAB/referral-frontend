@@ -32,6 +32,9 @@ constructor(private http: HttpClient){}
     return this.http.get<Referral[]>(`${this.API_URL}/referral/${userId}`);
   }
 
+  seachReferralByUserId(userId: string) {
+    return this.http.get<Referral[]>(`${this.API_URL}/referral/search-by-user`, { params: { userId } });
+  }
   toggleStatus(id: string) {
     // const referral = this.referrals.find(r => r._id === id);
     // if (referral) {

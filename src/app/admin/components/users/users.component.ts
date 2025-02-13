@@ -51,46 +51,89 @@ import {
         <div class="flex items-center gap-6">
           <!-- Search Input -->
           <div class="relative">
-          <input
-            type="text"
-            placeholder="      Search users..."
-            class="px-4 py-2 rounded-lg shadow-lg min-w-[300px] border focus:ring-2 focus:ring-blue-300"
-            [(ngModel)]="searchQuery"
-            (input)="searchUsers(searchQuery)"
-          />
-          <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500"></i>
-
+            <input
+              type="text"
+              placeholder="Search users..."
+              class="px-10 py-2 rounded-lg shadow-lg min-w-[300px] border focus:ring-2 focus:ring-blue-300 pr-10"
+              [(ngModel)]="searchQuery"
+              (input)="searchUsers(searchQuery)"
+            />
+            <i
+              class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500"
+            ></i>
+            <button
+              class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-800"
+              (click)="clearReferredByFilter()"
+              *ngIf="searchQuery"
+            >
+              <i class="fas fa-times"></i>
+            </button>
           </div>
 
-          <!-- Date Filters and Filter Button -->
-          <div class="flex gap-4 items-center">
-            <div class="flex items-center gap-2">
-              <label for="startDate" class="font-medium">Start Date:</label>
-              <input
-                id="startDate"
-                type="date"
-                class="px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-300"
-                [(ngModel)]="startDate"
-              />
-            </div>
-
-            <div class="flex items-center gap-2">
-              <label for="endDate" class="font-medium">End Date:</label>
-              <input
-                id="endDate"
-                type="date"
-                class="px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-300"
-                [(ngModel)]="endDate"
-              />
-            </div>
-
+          <div class="flex items-center">
             <button
               class="px-4 py-2 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 focus:ring-4 focus:ring-blue-300"
-              (click)="filterUsersByDateRange(startDate, endDate)"
+              (click)="openFilterPopup()"
             >
               Filter
             </button>
+            <button
+              class="px-4 py-2 mx-4 bg-gray-300 rounded-lg shadow-md hover:bg-gray-400"
+              (click)="getAllUsers()"
+            >
+              Clear Filter
+            </button>
           </div>
+
+          <div
+            *ngIf="isFilterPopupVisible"
+            class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+          >
+            <div class="bg-white rounded-lg p-6 shadow-lg w-96">
+              <h3 class="text-lg font-semibold mb-4">Filter by Date Range</h3>
+              <div class="flex flex-col gap-4">
+                <div class="flex items-center gap-2">
+                  <label for="startDate" class="font-medium w-1/3"
+                    >Start Date:</label
+                  >
+                  <input
+                    id="startDate"
+                    type="date"
+                    class="px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-300 w-full"
+                    [(ngModel)]="startDate"
+                  />
+                </div>
+
+                <div class="flex items-center gap-2">
+                  <label for="endDate" class="font-medium w-1/3"
+                    >End Date:</label
+                  >
+                  <input
+                    id="endDate"
+                    type="date"
+                    class="px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-300 w-full"
+                    [(ngModel)]="endDate"
+                  />
+                </div>
+              </div>
+
+              <div class="flex justify-end gap-4 mt-6">
+                <button
+                  class="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400"
+                  (click)="closeFilterPopup()"
+                >
+                  Cancel
+                </button>
+                <button
+                  class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                  (click)="applyFilter()"
+                >
+                  Apply
+                </button>
+              </div>
+            </div>
+          </div>
+
         </div>
 
         <!-- Right Section: Create User Button -->
@@ -104,7 +147,10 @@ import {
 
       <!-- Users Table -->
       <div class="bg-gray-700 rounded-lg shadow overflow-hidden">
-        <div class="overflow-auto max-h-[400px] hide-scrollbar">
+        <div
+          class="overflow-auto max-h-[400px] hide-scrollbar"
+          *ngIf="users.length > 0; else noDataTemplate"
+        >
           <!-- Add this wrapper div -->
           <table class="min-w-full">
             <thead class="bg-blue-600 sticky top-0 z-10">
@@ -196,6 +242,14 @@ import {
             </tbody>
           </table>
         </div>
+        <ng-template #noDataTemplate>
+          <div class="p-6 text-center bg-blue-400 rounded-lg">
+            <h2 class="text-xl font-bold text-gray-800">No Data Available</h2>
+            <p class="text-gray-600">
+              Try adjusting your search or filter criteria.
+            </p>
+          </div>
+        </ng-template>
       </div>
 
       <!-- Create User Modal -->
@@ -260,7 +314,7 @@ import {
                 [cssClass]="
                   'w-full px-4 py-2 border border-gray-300 rounded-lg'
                 "
-                 [preferredCountries]="preferredCountries"
+                [preferredCountries]="preferredCountries"
                 [enablePlaceholder]="true"
                 [searchCountryFlag]="true"
                 [selectedCountryISO]="CountryISO.India"
@@ -408,7 +462,7 @@ import {
       <!-- Edit User Modal -->
       @if (showEditUserModal) {
       <div
-        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
+        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
       >
         <div class="bg-white p-6 rounded-lg w-96">
           <h2 class="text-2xl font-bold mb-4">Edit User</h2>
@@ -600,7 +654,11 @@ export class UsersComponent {
   SearchCountryField = SearchCountryField;
   CountryISO = CountryISO;
   PhoneNumberFormat = PhoneNumberFormat;
-  preferredCountries: CountryISO[] = [CountryISO.UnitedStates, CountryISO.India];
+  preferredCountries: CountryISO[] = [
+    CountryISO.UnitedStates,
+    CountryISO.India,
+  ];
+  isFilterPopupVisible = false;
   searchQuery: string = "";
   startDate: string = "";
   endDate: string = "";
@@ -613,7 +671,7 @@ export class UsersComponent {
     username: "",
     password: "",
   };
-// control: AbstractControl<string|null,string|null>|FormControl<any>|null;
+  // control: AbstractControl<string|null,string|null>|FormControl<any>|null;
 
   constructor(private userService: UserService, private router: Router) {
     this.getAllUsers();
@@ -750,5 +808,26 @@ export class UsersComponent {
       .subscribe((res) => {
         this.users = res;
       });
+  }
+
+  clearReferredByFilter() {
+    // this.isFilterApplied = false;
+    this.searchQuery = "";
+    this.getAllUsers();
+  }
+
+  openFilterPopup() {
+    this.isFilterPopupVisible = true;
+  }
+
+  closeFilterPopup() {
+    this.isFilterPopupVisible = false;
+    this.startDate = "";
+    this.endDate = "";
+  }
+
+  applyFilter() {
+    this.filterUsersByDateRange(this.startDate, this.endDate);
+    this.closeFilterPopup();
   }
 }

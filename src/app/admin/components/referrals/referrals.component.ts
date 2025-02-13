@@ -111,11 +111,6 @@ import { ReferralService } from "../../services/referral.service";
               <th
                 class="px-6 py-3 text-left text-xs font-medium text-white uppercase"
               >
-                ID
-              </th>
-              <th
-                class="px-6 py-3 text-left text-xs font-medium text-white uppercase"
-              >
                 Name
               </th>
               <th
@@ -143,7 +138,6 @@ import { ReferralService } from "../../services/referral.service";
           <tbody class="divide-y divide-white">
             @for (referral of referrals; track referral._id) {
             <tr>
-              <td class="px-6 py-4  text-white">{{ referral._id }}</td>
               <td class="px-6 py-4  text-white">{{ referral.name }}</td>
               <td class="px-6 py-4  text-white">
                 {{ referral.referredBy.name }}

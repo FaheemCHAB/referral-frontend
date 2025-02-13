@@ -9,6 +9,7 @@ import { LoginComponent } from './components/login/login.component';
 import { ReferralFormComponent } from './components/referral-form/referral-form.component';
 import { ReferralsComponent } from './components/referrals/referrals.component';
 import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
+import { SafeUrlPipe } from "./safe-url.pipe";
 
 
 @NgModule({
@@ -17,14 +18,15 @@ import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
     FormElementsComponent,
     LoginComponent,
     ReferralFormComponent,
-    ReferralsComponent
+    ReferralsComponent,
+    SafeUrlPipe
   ],
   imports: [
     CommonModule,
     UserRoutingModule,
     RouterModule,
     FormsModule,
-    NgxIntlTelInputModule
-  ]
+    NgxIntlTelInputModule,
+]
 })
 export class UserModule { }
