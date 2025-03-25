@@ -4,196 +4,122 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-landing-page',
   template: `
-    <div class="landing-container">
-      <div class="animated-background"></div>
-      <nav class="navbar">
-        <div class="logo">ReferFuture</div>
-        <button class="login-btn" routerLink="/auth/login">Login</button>
+    <div class="min-h-screen relative overflow-hidden font-sans text-gray-100">
+      <!-- Animated background -->
+      <div class="absolute inset-0 bg-gradient-to-br from-purple-900 via-indigo-800 to-blue-900 animate-gradient-xy -z-10">
+        <div class="absolute inset-0 opacity-20 mix-blend-overlay">
+          <div class="absolute w-96 h-96 bg-radial-gradient(from-emerald-400/40 via-transparent to-transparent animate-float-1"></div>
+          <div class="absolute w-80 h-80 bg-radial-gradient(from-teal-300/30 via-transparent to-transparent animate-float-2"></div>
+        </div>
+      </div>
+      
+      <!-- Navbar -->
+      <nav class="flex justify-between items-center px-8 py-4 bg-black/20 backdrop-blur-md z-10 relative border-b border-white/10">
+        <div class="text-2xl font-bold bg-gradient-to-r from-emerald-400 to-teal-300 bg-clip-text text-transparent">
+          ReferNrich
+        </div>
+        <button class="group relative border-2 border-emerald-400/50 text-emerald-400 px-6 py-2 rounded-full transition-all duration-300 
+          hover:border-emerald-400 hover:bg-emerald-400/10 hover:shadow-lg hover:shadow-emerald-400/20" routerLink="/auth/login">
+          <span class="relative z-10">Login</span>
+          <div class="absolute inset-0 bg-emerald-400/10 rounded-full scale-0 group-hover:scale-100 transition-transform duration-500"></div>
+        </button>
       </nav>
       
-      <main class="hero">
-        <h1 class="title">Welcome to the Future of Referrals</h1>
-        <p class="subtitle">Revolutionize your network with our cutting-edge referral system</p>
-        <div class="cta-container">
-          <button class="cta-btn">Get Started</button>
+      <!-- Hero Section -->
+      <main class="text-center px-8 py-24 relative z-10">
+        <div class="max-w-4xl mx-auto">
+          <div class="relative inline-block mb-8">
+            <div class="absolute -inset-4 bg-emerald-400/30 blur-2xl rounded-full animate-pulse-slow"></div>
+            <span class="relative z-10 text-lg font-semibold bg-emerald-400/10 text-emerald-400 px-6 py-3 rounded-full">
+              🎉 Earn 1 Bonus Point = ₹10 on every successful referral!
+            </span>
+          </div>
+          <h1 class="text-6xl font-bold mb-6 text-white leading-tight">
+            Transform Referrals into <span class="bg-gradient-to-r from-emerald-400 to-teal-300 bg-clip-text text-transparent">Wealth</span>
+          </h1>
+          <p class="text-xl mb-10 text-gray-300/90 max-w-2xl mx-auto leading-relaxed">
+            Leverage our intelligent referral ecosystem to maximize your network value. 
+            <span class="font-semibold text-emerald-400">Every connection converts to real rewards!</span>
+          </p>
+          <div class="flex justify-center gap-4">
+            <button class="group relative bg-gradient-to-r from-emerald-500 to-teal-400 text-gray-900 px-8 py-4 text-xl rounded-full 
+              transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl hover:shadow-emerald-500/40 font-semibold">
+              <span class="relative z-10">Start Earning Now</span>
+              <div class="absolute inset-0 bg-gradient-to-r from-emerald-500/0 to-teal-400/0 rounded-full opacity-0 
+                group-hover:opacity-100 transition-opacity duration-300"></div>
+            </button>
+          </div>
         </div>
       </main>
       
-      <section class="features">
-        <div class="feature">
-          <div class="icon">🚀</div>
-          <h2>Boost Your Network</h2>
-          <p>Expand your connections exponentially</p>
+      <!-- Features Section -->
+      <section class="grid grid-cols-1 md:grid-cols-3 gap-8 px-8 py-16 relative z-10 max-w-7xl mx-auto">
+        <div class="relative bg-gradient-to-b from-black/40 to-black/20 backdrop-blur-xl p-8 rounded-2xl 
+          border border-white/10 hover:border-emerald-400/30 transition-all duration-300 group">
+          <div class="absolute -inset-px bg-gradient-to-br from-emerald-400/20 to-teal-300/10 rounded-2xl opacity-0 
+            group-hover:opacity-100 transition-opacity duration-300"></div>
+          <div class="text-5xl mb-6 bg-gradient-to-r from-emerald-400 to-teal-300 bg-clip-text text-transparent w-fit mx-auto">✨</div>
+          <h3 class="text-2xl font-semibold mb-4 text-white">Instant Rewards</h3>
+          <p class="text-gray-300/90 leading-relaxed">
+            Earn ₹10 equivalent points instantly for every referral. Watch your balance grow in real-time!
+          </p>
         </div>
-        <div class="feature">
-          <div class="icon">💎</div>
-          <h2>Earn Rewards</h2>
-          <p>Get rewarded for every successful referral</p>
+
+        <div class="relative bg-gradient-to-b from-black/40 to-black/20 backdrop-blur-xl p-8 rounded-2xl 
+          border border-white/10 hover:border-emerald-400/30 transition-all duration-300 group">
+          <div class="absolute -inset-px bg-gradient-to-br from-emerald-400/20 to-teal-300/10 rounded-2xl opacity-0 
+            group-hover:opacity-100 transition-opacity duration-300"></div>
+          <div class="text-5xl mb-6 bg-gradient-to-r from-emerald-400 to-teal-300 bg-clip-text text-transparent w-fit mx-auto">🚀</div>
+          <h3 class="text-2xl font-semibold mb-4 text-white">Smart Tracking</h3>
+          <p class="text-gray-300/90 leading-relaxed">
+            Real-time analytics dashboard to monitor your referrals and earnings progression
+          </p>
         </div>
-        <div class="feature">
-          <div class="icon">🔮</div>
-          <h2>Predict Success</h2>
-          <p>AI-powered referral matching</p>
+
+        <div class="relative bg-gradient-to-b from-black/40 to-black/20 backdrop-blur-xl p-8 rounded-2xl 
+          border border-white/10 hover:border-emerald-400/30 transition-all duration-300 group">
+          <div class="absolute -inset-px bg-gradient-to-br from-emerald-400/20 to-teal-300/10 rounded-2xl opacity-0 
+            group-hover:opacity-100 transition-opacity duration-300"></div>
+          <div class="text-5xl mb-6 bg-gradient-to-r from-emerald-400 to-teal-300 bg-clip-text text-transparent w-fit mx-auto">💸</div>
+          <h3 class="text-2xl font-semibold mb-4 text-white">Flexible Redemption</h3>
+          <p class="text-gray-300/90 leading-relaxed">
+            Convert points to rewards
+          </p>
         </div>
       </section>
     </div>
   `,
   styles: [`
-    .landing-container {
-      font-family: 'Arial', sans-serif;
-      color: #e0e0e0;
-      min-height: 100vh;
-      overflow: hidden;
-      position: relative;
+    .animate-gradient-xy {
+      background-size: 300% 300%;
+      animation: gradient-animation 12s ease infinite;
     }
-
-    .animated-background {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(45deg, #000033, #000066, #000099, #000033);
-      background-size: 400% 400%;
-      animation: gradientBG 15s ease infinite;
-      z-index: -1;
+    @keyframes gradient-animation {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
-
-    @keyframes gradientBG {
-      0% {
-        background-position: 0% 50%;
-      }
-      50% {
-        background-position: 100% 50%;
-      }
-      100% {
-        background-position: 0% 50%;
-      }
+    .animate-float-1 {
+      animation: float-1 8s ease-in-out infinite;
     }
-
-    .navbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 2rem;
-      background: rgba(0, 0, 51, 0.5);
-      backdrop-filter: blur(10px);
-      position: relative;
-      z-index: 10;
+    .animate-float-2 {
+      animation: float-2 10s ease-in-out infinite;
     }
-
-    .logo {
-      font-size: 1.5rem;
-      font-weight: bold;
-      background: linear-gradient(45deg, #4169E1, #00BFFF);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+    @keyframes float-1 {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      50% { transform: translate(50px, -50px) rotate(5deg); }
     }
-
-    .login-btn {
-      background: transparent;
-      border: 2px solid #4169E1;
-      color: #4169E1;
-      padding: 0.5rem 1rem;
-      border-radius: 25px;
-      cursor: pointer;
-      transition: all 0.3s ease;
+    @keyframes float-2 {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      50% { transform: translate(-30px, 40px) rotate(-5deg); }
     }
-
-    .login-btn:hover {
-      background: #4169E1;
-      color: #000033;
+    .animate-pulse-slow {
+      animation: pulse-slow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
     }
-
-    .hero {
-      text-align: center;
-      padding: 4rem 2rem;
-      position: relative;
-      z-index: 10;
-    }
-
-    .title {
-      font-size: 3rem;
-      margin-bottom: 1rem;
-      animation: glow 2s ease-in-out infinite alternate;
-    }
-
-    @keyframes glow {
-      from {
-        text-shadow: 0 0 5px #4169E1, 0 0 10px #4169E1, 0 0 15px #4169E1;
-      }
-      to {
-        text-shadow: 0 0 10px #4169E1, 0 0 20px #4169E1, 0 0 30px #4169E1;
-      }
-    }
-
-    .subtitle {
-      font-size: 1.2rem;
-      margin-bottom: 2rem;
-      color: #B0C4DE;
-    }
-
-    .cta-btn {
-      background: linear-gradient(45deg, #4169E1, #00BFFF);
-      border: none;
-      color: #000033;
-      padding: 1rem 2rem;
-      font-size: 1.2rem;
-      border-radius: 50px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .cta-btn:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 20px rgba(65, 105, 225, 0.5);
-    }
-
-    .features {
-      display: flex;
-      justify-content: space-around;
-      padding: 4rem 2rem;
-      position: relative;
-      z-index: 10;
-    }
-
-    .feature {
-      text-align: center;
-      max-width: 300px;
-      background: rgba(0, 0, 51, 0.5);
-      backdrop-filter: blur(10px);
-      padding: 2rem;
-      border-radius: 15px;
-      transition: all 0.3s ease;
-    }
-
-    .feature:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 10px 20px rgba(65, 105, 225, 0.2);
-    }
-
-    .icon {
-      font-size: 3rem;
-      margin-bottom: 1rem;
-    }
-
-    .feature h2 {
-      font-size: 1.5rem;
-      margin-bottom: 0.5rem;
-      color: #B0C4DE;
-    }
-
-    .feature p {
-      font-size: 1rem;
-      color: #8090A0;
+    @keyframes pulse-slow {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
     }
   `]
-
 })
-export class LandingPageComponent {
-  constructor(private router: Router) {}
-
-  // navigateTo(role: string) {
-  //   this.router.navigate([`/${role}/login`]);
-  // }
-}
+export class LandingPageComponent {}

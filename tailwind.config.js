@@ -5,10 +5,16 @@ module.exports = {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        'gradient-blue': 'linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)',
+      animation: {
+        'fade-in-up': 'fadeInUp 0.3s ease-out'
       },
-    },
+      keyframes: {
+        fadeInUp: {
+          '0%': { opacity: '0', transform: 'translateY(10px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' }
+        }
+      }
+    }
   },
   plugins: [],
 }

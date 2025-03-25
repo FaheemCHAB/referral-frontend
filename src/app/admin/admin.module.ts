@@ -1,29 +1,29 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { AdminRoutingModule } from './admin-routing.module';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { RouterModule } from '@angular/router';
 import { LoginComponent } from './components/login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ReferralsComponent } from './components/referrals/referrals.component';
 import { UsersComponent } from './components/users/users.component';
-import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
+import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
+import { RewardsComponent } from './components/rewards/rewards.component';
 
 
 @NgModule({
   declarations: [
-    DashboardComponent,
     LoginComponent,
     ReferralsComponent,
-    UsersComponent
+    UsersComponent,
+    AdminDashboardComponent,
+    RewardsComponent
   ],
   imports: [
     CommonModule,
     AdminRoutingModule,
+    RouterModule,
     FormsModule,
-    ReactiveFormsModule,
-    NgxIntlTelInputModule
-  ]  
+  ]
 })
 export class AdminModule { }

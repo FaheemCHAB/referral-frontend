@@ -1,0 +1,350 @@
+<div class="min-h-screen bg-gradient-to-br from-indigo-50 to-blue-50 py-12 px-4 font-sans">
+  <div class="container mx-auto max-w-6xl">
+    <!-- Header with Back and Logout Buttons -->
+    <div class="flex justify-between items-center mb-10">
+      <button 
+        (click)="goBack()" 
+        class="group flex items-center text-indigo-600 font-medium hover:text-indigo-800 transition-all duration-300"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 group-hover:-translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+        </svg>
+        Back
+      </button>
+      
+      <!-- <button 
+        (click)="logout()" 
+        class="group flex items-center text-red-500 font-medium hover:text-red-700 transition-all duration-300"
+      >
+        <span class="mr-2">Logout</span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+        </svg>
+      </button> -->
+    </div>
+
+    <!-- Main Content -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <!-- My Rewards Card -->
+      <div class="lg:col-span-2 bg-white rounded-3xl shadow-xl overflow-hidden transform transition hover:scale-[1.01] duration-300" *ngIf="rewards && rewards.length > 0">
+        <div class="bg-gradient-to-r from-indigo-500 to-blue-600 p-8 relative overflow-hidden">
+          <div class="absolute top-0 right-0 -mt-10 -mr-10 w-40 h-40 bg-white opacity-10 rounded-full"></div>
+          <div class="absolute bottom-0 left-0 -mb-10 -ml-10 w-40 h-40 bg-white opacity-10 rounded-full"></div>
+          
+          <h2 class="text-2xl font-bold text-white flex items-center z-10 relative">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 mr-3 text-yellow-300" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+            </svg>
+            My Rewards
+          </h2>
+          
+          <div class="mt-6 flex flex-wrap gap-8 z-10 relative">
+            <div class="bg-white bg-opacity-20 p-4 rounded-2xl backdrop-filter backdrop-blur-sm">
+              <span class="text-blue-100 text-sm uppercase tracking-wider font-medium">Total Points</span>
+              <div class="flex items-baseline">
+                <span class="text-4xl font-bold text-white">{{ rewards[0]?.bonusPoints }}</span>
+              </div>
+            </div>
+            
+            <div class="bg-white bg-opacity-20 p-4 rounded-2xl backdrop-filter backdrop-blur-sm" *ngIf="rewards[0]?.amount">
+              <span class="text-blue-100 text-sm uppercase tracking-wider font-medium">Total Amount</span>
+              <div class="flex items-baseline">
+                <span class="text-4xl font-bold text-white">{{ rewards[0]?.amount | currency:'INR' }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+        <div class="p-8">
+          <h3 class="text-xl font-semibold text-gray-800 mb-6 flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-indigo-500" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
+            </svg>
+            Reward History
+          </h3>
+          
+          <div class="space-y-4 max-h-96 overflow-y-auto">
+            <div 
+              *ngFor="let item of rewards[0]?.history"
+              class="bg-gray-50 rounded-2xl p-5 flex justify-between items-center transform transition hover:bg-gray-100 hover:scale-[1.01] duration-300"
+              [ngClass]="{'border-l-4 border-indigo-500 pl-4': isRecentActivity(item.date)}"
+            >
+              <div>
+                <p class="font-semibold text-gray-800 text-lg" *ngIf="item.amount">{{ item.amount | currency:'INR' }}</p>
+                <p class="text-sm text-gray-500 mt-1">{{ item.date | date:'MMM d, yyyy' }}</p>
+                <span 
+                  class="inline-block mt-2 px-3 py-1 rounded-full text-xs font-medium"
+                  [ngClass]="getStatusClass(item.status)"
+                >
+                  {{ item.status }}
+                </span>
+              </div>
+              
+              <span class="flex items-center font-bold text-green-600 bg-green-50 px-3 py-2 rounded-xl">
+                +{{ item.bonusPoints }}
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1 text-yellow-500" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+                </svg>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Referral Rewards Card -->
+      <div class="bg-white rounded-3xl shadow-xl overflow-hidden transform transition hover:scale-[1.01] duration-300" *ngIf="referralRewards && referralRewards.length > 0">
+        <div class="bg-gradient-to-r from-purple-500 to-pink-500 p-8 relative overflow-hidden">
+          <div class="absolute top-0 right-0 -mt-10 -mr-10 w-40 h-40 bg-white opacity-10 rounded-full"></div>
+          <div class="absolute bottom-0 left-0 -mb-10 -ml-10 w-40 h-40 bg-white opacity-10 rounded-full"></div>
+          
+          <h2 class="text-2xl font-bold text-white flex items-center z-10 relative">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 mr-3 text-yellow-300" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
+            </svg>
+            Referral Rewards
+          </h2>
+          
+          <div class="mt-6 z-10 relative">
+            <div class="bg-white bg-opacity-20 p-4 rounded-2xl backdrop-filter backdrop-blur-sm">
+              <span class="text-purple-100 text-sm uppercase tracking-wider font-medium">Total Amount</span>
+              <div class="flex items-baseline">
+                <span class="text-4xl font-bold text-white">{{ referralRewards[0]?.amount | currency:'INR' }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+        <div class="p-8">
+          <h3 class="text-xl font-semibold text-gray-800 mb-6 flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-purple-500" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
+            </svg>
+            Reward History
+          </h3>
+          
+          <div class="space-y-4 max-h-96 overflow-y-auto">
+            <div 
+              *ngFor="let item of referralRewards[0]?.history"
+              class="bg-gray-50 rounded-2xl p-5 flex justify-between items-center transform transition hover:bg-gray-100 hover:scale-[1.01] duration-300"
+              [ngClass]="{'border-l-4 border-purple-500 pl-4': isRecentActivity(item.date)}"
+            >
+              <div>
+                <p class="font-semibold text-gray-800 text-lg" *ngIf="item.amount">{{ item.amount | currency:'INR' }}</p>
+                <p class="text-sm text-gray-500 mt-1">{{ item.date | date:'MMM d, yyyy' }}</p>
+                <span 
+                  class="inline-block mt-2 px-3 py-1 rounded-full text-xs font-medium"
+                  [ngClass]="getStatusClass(item.status)"
+                >
+                  {{ item.status }}
+                </span>
+              </div>
+              
+              <span class="flex items-center font-bold text-green-600 bg-green-50 px-3 py-2 rounded-xl" *ngIf="item.bonusPoints">
+                +{{ item.bonusPoints }}
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1 text-yellow-500" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+                </svg>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- No Rewards State -->
+      <div class="lg:col-span-2 bg-white rounded-3xl shadow-xl overflow-hidden transform transition hover:scale-[1.01] duration-300" *ngIf="!rewards || rewards.length === 0">
+        <div class="bg-gradient-to-r from-indigo-500 to-blue-600 p-8 relative overflow-hidden">
+          <div class="absolute top-0 right-0 -mt-10 -mr-10 w-40 h-40 bg-white opacity-10 rounded-full"></div>
+          <div class="absolute bottom-0 left-0 -mb-10 -ml-10 w-40 h-40 bg-white opacity-10 rounded-full"></div>
+          
+          <h2 class="text-2xl font-bold text-white flex items-center z-10 relative">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 mr-3 text-yellow-300" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+            </svg>
+            My Rewards
+          </h2>
+          
+          <div class="mt-6 flex justify-center z-10 relative">
+            <div class="bg-white bg-opacity-20 px-6 py-3 rounded-2xl backdrop-filter backdrop-blur-sm">
+              <div class="flex items-baseline">
+                <span class="text-4xl font-bold text-white">0</span>
+                <span class="ml-2 text-blue-100 font-medium">points</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+        <div class="p-8 text-center">
+          <div class="py-8 flex flex-col items-center">
+            <div class="w-20 h-20 bg-indigo-100 rounded-full flex items-center justify-center mb-6">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
+            </div>
+            
+            <h3 class="text-2xl font-semibold text-gray-800 mb-3">No Rewards Yet</h3>
+            <p class="text-gray-600 max-w-md mb-8">Refer friends and earn exciting rewards and bonus points that you can redeem for special offers!</p>
+            
+            <button class="bg-gradient-to-r from-indigo-600 to-blue-600 text-white font-medium px-6 py-3 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 flex items-center transform hover:translate-y-[-2px]" routerLink="/user/dashboard">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+              </svg>
+              Refer a Friend
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Leaderboard Section -->
+      <div class="lg:col-span-3 space-y-8">
+        <!-- Leaderboard Header -->
+        <div class="bg-white rounded-3xl shadow-xl p-8 text-center bg-gradient-to-r from-indigo-50 to-blue-50 transform transition hover:scale-[1.01] duration-300">
+          <h2 class="text-3xl font-bold text-gray-800 mb-3">Rewards Leaderboard</h2>
+          <p class="text-gray-600 text-lg">Compete with <span class="font-semibold text-indigo-600">{{ totalParticipants }}</span> participants</p>
+        </div>
+        
+        <!-- Top Performers -->
+        <div class="bg-white rounded-3xl shadow-xl p-10 transform transition hover:scale-[1.01] duration-300">
+          <h3 class="text-2xl font-bold mb-10 text-gray-800 flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 mr-3 text-yellow-500" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+            </svg>
+            Top Performers
+          </h3>
+          
+          <div class="flex flex-col md:flex-row justify-between items-end space-y-8 md:space-y-0 md:space-x-8">
+            <!-- 2nd Place -->
+            <div *ngIf="topPerformers[1]" class="flex-1 transform transition hover:scale-[1.05] duration-300">
+              <div class="flex flex-col items-center">
+                <div class="relative">
+                  <div class="w-20 h-20 bg-gradient-to-br from-gray-300 to-gray-400 rounded-full flex items-center justify-center text-2xl font-bold text-white border-4 border-gray-200 shadow-lg">
+                    {{ topPerformers[1].name.charAt(0) }}
+                  </div>
+                  <div class="absolute -bottom-3 -right-3 bg-gray-300 text-gray-700 rounded-full w-10 h-10 flex items-center justify-center font-bold shadow-md text-lg">
+                    2
+                  </div>
+                </div>
+                <p class="mt-6 font-semibold text-gray-800 text-center text-lg">{{ topPerformers[1].name }}</p>
+                <p class="font-bold text-indigo-600 flex items-center mt-2 text-lg">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1 text-yellow-500" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+                  </svg>
+                  {{ topPerformers[1].totalBonusPoints }}
+                </p>
+              </div>
+            </div>
+            
+            <!-- 1st Place -->
+            <div *ngIf="topPerformers[0]" class="flex-1 -mt-8 md:mt-0 transform transition hover:scale-[1.05] duration-300">
+              <div class="flex flex-col items-center">
+                <div class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mb-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-yellow-500" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M5 2a1 1 0 011 1v1h1a1 1 0 010 2H6v1a1 1 0 01-2 0V6H3a1 1 0 010-2h1V3a1 1 0 011-1zm0 10a1 1 0 011 1v1h1a1 1 0 110 2H6v1a1 1 0 11-2 0v-1H3a1 1 0 110-2h1v-1a1 1 0 011-1zm7-10a1 1 0 01.707.293l.707.707.707-.707A1 1 0 0116 2.707l-.707.707.707.707A1 1 0 1114.707 6l-.707-.707-.707.707A1 1 0 1112 4.707l.707-.707-.707-.707A1 1 0 0112 2zm0 10a1 1 0 01.707.293l.707.707.707-.707A1 1 0 0116 12.707l-.707.707.707.707A1 1 0 1114.707 16l-.707-.707-.707.707A1 1 0 1112 14.707l.707-.707-.707-.707A1 1 0 0112 12z" clip-rule="evenodd" />
+                  </svg>
+                </div>
+                <div class="relative">
+                  <div class="w-32 h-32 bg-gradient-to-br from-yellow-300 to-yellow-500 rounded-full flex items-center justify-center text-3xl font-bold text-white border-4 border-yellow-200 shadow-xl">
+                    {{ topPerformers[0].name.charAt(0) }}
+                  </div>
+                  <div class="absolute -bottom-4 -right-4 bg-yellow-400 text-yellow-800 rounded-full w-12 h-12 flex items-center justify-center font-bold shadow-lg text-xl">
+                    1
+                  </div>
+                </div>
+                <p class="mt-6 font-bold text-gray-800 text-center text-xl">{{ topPerformers[0].name }}</p>
+                <p class="font-bold text-indigo-600 flex items-center mt-2 text-2xl">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-1 text-yellow-500" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+                  </svg>
+                  {{ topPerformers[0].totalBonusPoints }}
+                </p>
+              </div>
+            </div>
+            
+            <!-- 3rd Place -->
+            <div *ngIf="topPerformers[2]" class="flex-1">
+              <div class="flex flex-col items-center">
+                <div class="relative">
+                  <div class="w-20 h-20 bg-yellow-50 rounded-full flex items-center justify-center text-2xl font-bold text-yellow-700 border-4 border-yellow-600 shadow-lg">
+                    {{ topPerformers[2].name.charAt(0) }}
+                  </div>
+                  <div class="absolute -bottom-3 -right-3 bg-yellow-600 text-yellow-50 rounded-full w-10 h-10 flex items-center justify-center font-bold shadow-md text-lg">
+                    3
+                  </div>
+                </div>
+                <p class="mt-5 font-medium text-gray-800 text-center text-lg">{{ topPerformers[2].name }}</p>
+                <p class="font-bold text-blue-600 flex items-center mt-2 text-lg">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1 text-yellow-500" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+                  </svg>
+                  {{ topPerformers[2].totalBonusPoints }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        
+        <!-- Full Leaderboard -->
+        <div class="bg-white rounded-2xl shadow-lg p-6">
+          <h3 class="text-lg font-bold text-gray-800 mb-4 flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-blue-500" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M3 3a1 1 0 000 2h10a1 1 0 100-2H3zm0 4a1 1 0 000 2h10a1 1 0 100-2H3zm0 4a1 1 0 100 2h10a1 1 0 100-2H3z" clip-rule="evenodd" />
+            </svg>
+            All Participants
+          </h3>
+          
+          <div class="max-h-96 overflow-y-auto pr-4 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+            <div 
+              *ngFor="let player of leaderboard; let i = index" 
+              class="flex justify-between items-center py-3 px-5 rounded-lg shadow-sm transition-all duration-300 hover:bg-blue-50 hover:shadow-md transform hover:scale-105 cursor-pointer"
+              [ngClass]="{
+                'bg-yellow-50 border-l-4 border-yellow-500 font-semibold text-yellow-800': i === 0,
+                'bg-gray-100 border-l-4 border-gray-400 font-semibold text-gray-700': i === 1,
+                'bg-orange-50 border-l-4 border-orange-500 font-semibold text-orange-800': i === 2,
+                'bg-white': i > 2,
+                'bg-blue-100 border-l-4 border-blue-500': player.userId === currentUserId && i > 2
+              }"
+            >
+              <div class="flex items-center space-x-4">
+                <!-- Rank Badge -->
+                <div class="w-9 h-9 rounded-full flex items-center justify-center font-bold text-white text-lg"
+                    [ngClass]="{
+                      'bg-yellow-500': i === 0,
+                      'bg-gray-500': i === 1,
+                      'bg-orange-500': i === 2,
+                      'bg-blue-400': player.userId === currentUserId && i > 2,
+                      'bg-gray-300': player.userId !== currentUserId && i > 2
+                    }">
+                  {{ i + 1 }}
+                </div>
+          
+                <!-- Player Avatar -->
+                <div class="w-10 h-10 rounded-full flex items-center justify-center text-white font-semibold text-lg shadow-md"
+                    [ngClass]="{
+                      'bg-yellow-400': i === 0,
+                      'bg-gray-400': i === 1,
+                      'bg-orange-400': i === 2,
+                      'bg-blue-500': player.userId === currentUserId && i > 2,
+                      'bg-gray-200 text-gray-800': player.userId !== currentUserId && i > 2
+                    }">
+                  {{ player.name.charAt(0) }}
+                </div>
+          
+                <!-- Player Name -->
+                <div class="text-lg font-medium text-gray-800">
+                  {{ player.name }}
+                </div>
+              </div>
+          
+              <!-- Bonus Points -->
+              <div class="flex items-center space-x-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-500" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+                </svg>
+                <span class="font-bold text-blue-600 text-lg">{{ player.totalBonusPoints }}</span>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>

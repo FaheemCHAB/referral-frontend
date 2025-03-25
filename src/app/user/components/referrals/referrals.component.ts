@@ -9,201 +9,221 @@ import { AuthService } from "../../../auth/service/auth.service";
   selector: "app-referrals",
   template: `
     <div
-      class="h-screen bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"
+      class="min-h-screen bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100 py-12 px-4 sm:px-6 lg:px-8"
     >
-      <div class="p-4 flex justify-between items-center">
-        <button
-          (click)="goBack()"
-          class="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-teal-400 to-blue-500 hover:from-pink-500 hover:to-orange-500 text-white rounded-lg shadow-lg transition-transform transform hover:scale-105"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="w-6 h-6"
+      <div class="max-w-7xl mx-auto">
+        <!-- Header and Action Buttons -->
+        <div class="flex justify-between items-center mb-8">
+          <button
+            (click)="goBack()"
+            class="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-teal-400 to-blue-500 hover:from-teal-500 hover:to-blue-600 text-white rounded-lg shadow-md transition-all"
           >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M15 19l-7-7 7-7"
-            />
-          </svg>
-          <span>Back</span>
-        </button>
-      </div>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M15 19l-7-7 7-7"
+              />
+            </svg>
+            <span>Back</span>
+          </button>
 
-      <button
-        (click)="logout()"
-        class="absolute top-4 right-4 bg-red-500 hover:bg-red-600 text-white font-semibold px-4 py-2 rounded-lg shadow-lg transition-all"
-      >
-        <i class="fas fa-lock mr-2"></i>
-        Logout
-      </button>
+          <!-- <button
+            (click)="logout()"
+            class="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg shadow-md transition-all"
+          >
+            Logout
+          </button> -->
+        </div>
 
-      <div
-        *ngIf="referrals.length > 0; else noReferrals"
-        class="max-w-6xl mx-auto p-6"
-      >
-        <div class="bg-white rounded-xl shadow-lg p-8">
-          <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">
-            My Referrals
-          </h2>
-          <div class="overflow-y-auto max-h-96 hide-scrollbar">
-            <!-- <div class="relative">
-            <input
-              type="text"
-              placeholder="Search users..."
-              class="px-8 py-2 rounded-lg shadow-lg min-w-[300px] border focus:ring-2 focus:ring-blue-300 pr-10 mb-5"
-              [(ngModel)]="searchQuery"
-                (input)="searchByName(searchQuery)"
-            />
-            <i
-              class="fas fa-search absolute left-3 top-5 transform -translate-y-1/2 text-gray-500"
-            ></i>
-            </div> -->
-            <table class="min-w-full divide-y divide-gray-200 table-auto">
-              <thead class="bg-gray-800 text-white sticky top-0 z-10">
+        <!-- Referrals Container -->
+        <div class="bg-white rounded-xl shadow-2xl overflow-hidden">
+          <div class="p-6 bg-gray-50 border-b border-gray-200">
+            <h2
+              class="text-3xl font-extrabold text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600"
+            >
+              My Referrals
+            </h2>
+
+            <!-- Filtering and Search -->
+            <div
+              class="mt-6 flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4"
+            >
+              <div class="relative flex-grow">
+                <input
+                  type="text"
+                  placeholder="Search referrals..."
+                  [(ngModel)]="searchQuery"
+                  (input)="filterReferrals()"
+                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="absolute right-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                  />
+                </svg>
+              </div>
+
+              <select
+                [(ngModel)]="statusFilter"
+                (ngModelChange)="filterReferrals()"
+                class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+              >
+                <option value="All">All Status</option>
+                <option value="Attended">Attended</option>
+                <option value="Not-Attended">Not-Attended</option>
+                <option value="Joined">Joined</option>
+                <option value="Registered">Registered</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Referrals Table -->
+          <div *ngIf="filteredReferrals.length" class="overflow-x-auto">
+            <table class="w-full">
+              <thead
+                class="bg-gradient-to-r from-blue-500 to-purple-600 text-white"
+              >
                 <tr>
                   <th
-                    class="px-4 py-2 text-left text-sm font-semibold tracking-wide"
-                  >
-                    ID
-                  </th>
-                  <th
-                    class="px-4 py-2 text-left text-sm font-semibold tracking-wide"
+                    class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider"
                   >
                     Name
                   </th>
                   <th
-                    class="px-4 py-2 text-left text-sm font-semibold tracking-wide"
+                    class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider"
                   >
                     Mobile
                   </th>
                   <th
-                    class="px-4 py-2 text-left text-sm font-semibold tracking-wide"
+                    class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider"
                   >
                     Status
                   </th>
                   <th
-                    class="px-4 py-2 text-left text-sm font-semibold tracking-wide"
+                    class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider"
                   >
-                    View More
+                    View
                   </th>
                 </tr>
               </thead>
-              <tbody class="bg-white divide-y divide-gray-200">
+              <tbody class="divide-y divide-gray-200">
                 <tr
-                  *ngFor="let referral of referrals"
-                  class="hover:bg-gray-100 transition-colors"
+                  *ngFor="let referral of filteredReferrals"
+                  class="hover:bg-gray-50 transition-colors"
                 >
-                  <td class="px-4 py-2 text-sm text-gray-800">
-                    {{ referral._id }}
-                  </td>
-                  <td class="px-4 py-2 text-sm text-gray-800">
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                     {{ referral.name }}
                   </td>
-                  <td class="px-4 py-2 text-sm text-gray-800">
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                     {{ referral.mobile }}
                   </td>
-                  <td
-                    class="px-4 py-2 text-sm font-medium"
-                    [ngClass]="
-                      referral.isActive ? 'text-green-600' : 'text-red-600'
-                    "
-                  >
-                    {{ referral.isActive ? "Active" : "Inactive" }}
-                  </td>
-                  <td class="px-6 py-4 cursor-pointer">
-                    <svg
-                      (click)="showDetails(referral)"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke-width="1.5"
-                      stroke="currentColor"
-                      class="w-5 h-5"
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <span
+                      [ngClass]="{
+                        'bg-green-100 text-green-800':
+                          referral.attendanceStatus === 'Attended',
+                        'bg-red-100 text-red-800':
+                          referral.attendanceStatus === 'Not-Attended',
+                        'bg-blue-100 text-blue-800':
+                          referral.attendanceStatus === 'Registered',
+                        'bg-yellow-100 text-yellow-800':
+                          referral.attendanceStatus === 'Joined'
+                      }"
+                      class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full"
                     >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"
-                      />
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-                      />
-                    </svg>
+                      {{ referral.attendanceStatus }}
+                    </span>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                    <button
+                      (click)="showDetails(referral)"
+                      class="text-blue-600 hover:text-blue-900 transition-colors"
+                    >
+                      View Details
+                    </button>
                   </td>
                 </tr>
               </tbody>
             </table>
           </div>
+        </div>
 
-          <!-- Details Modal -->
-          @if (selectedReferral) {
+        <!-- Referral Details Modal -->
+        <div
+          *ngIf="selectedReferral"
+          class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+        >
           <div
-            class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+            class="bg-white rounded-xl shadow-2xl max-w-md w-full p-8 relative"
           >
-            <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-lg">
-              <h2 class="text-2xl font-bold mb-6 text-gray-800 text-center">
-                Referral Details
-              </h2>
-              <div class="mb-6 space-y-4">
-                <div class="flex justify-between items-center">
-                  <span class="font-semibold text-gray-700">Email:</span>
-                  <span class="text-gray-600">{{
-                    selectedReferral.email
-                  }}</span>
-                </div>
-                <div class="flex justify-between items-center">
-                  <span class="font-semibold text-gray-700">Place:</span>
-                  <span class="text-gray-600">{{
-                    selectedReferral.place
-                  }}</span>
-                </div>
-                <div class="flex justify-between items-center">
-                  <span class="font-semibold text-gray-700"
-                    >Qualification:</span
-                  >
-                  <span class="text-gray-600">{{
-                    selectedReferral.qualification
-                  }}</span>
-                </div>
-                <div class="flex justify-between items-center">
-                  <span class="font-semibold text-gray-700">Age:</span>
-                  <span class="text-gray-600">
-                    {{ calculateAge(selectedReferral.dob) }}</span
-                  >
-                </div>
+            <button
+              (click)="selectedReferral = null"
+              class="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+
+            <h2
+              class="text-2xl font-bold mb-6 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600"
+            >
+              Referral Details
+            </h2>
+
+            <div class="space-y-4">
+              <div class="flex justify-between border-b pb-2">
+                <span class="font-semibold text-gray-700">Email</span>
+                <span class="text-gray-900">{{ selectedReferral.email }}</span>
               </div>
-              <div class="flex justify-end">
-                <button
-                  class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg transition-all shadow"
-                  (click)="selectedReferral = null"
-                >
-                  Close
-                </button>
+              <div class="flex justify-between border-b pb-2">
+                <span class="font-semibold text-gray-700">Place</span>
+                <span class="text-gray-900">{{ selectedReferral.place }}</span>
+              </div>
+              <div class="flex justify-between border-b pb-2">
+                <span class="font-semibold text-gray-700">Qualification</span>
+                <span class="text-gray-900">{{
+                  selectedReferral.qualification
+                }}</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="font-semibold text-gray-700">Pass Out Year</span>
+                <span class="text-gray-900">{{ selectedReferral.passOutYear | date:'yyyy' }}</span>
+
+
               </div>
             </div>
           </div>
-          }
         </div>
       </div>
-
-      <ng-template #noReferrals>
-        <div class="max-w-6xl mx-auto p-6">
-          <div class="bg-white rounded-xl shadow-lg p-8 text-center">
-            <h2 class="text-3xl font-bold text-gray-800">No Referrals Found</h2>
-            <p class="text-gray-600 mt-4">
-              You currently have no referrals. Once you refer someone, they will
-              appear here.
-            </p>
-          </div>
-        </div>
-      </ng-template>
     </div>
   `,
 })
@@ -211,71 +231,86 @@ export class ReferralsComponent implements OnInit {
   referrals: Referral[] = [];
   selectedReferral: Referral | null = null;
   searchQuery: string = "";
-
+  filteredReferrals: Referral[] = [];
+  statusFilter: string = "All";
+  isLoading: boolean = true;
+  
   constructor(
     private referralService: ReferralService,
     private router: Router,
     private route: ActivatedRoute,
     private authService: AuthService
   ) {}
-
+  
   ngOnInit() {
     const userId = this.route.snapshot.paramMap.get("userId")!;
     this.getReferralsByUserId(userId);
   }
-
+  
+  getReferralsByUserId(userId: string) {
+    this.isLoading = true;
+    this.referralService.getReferralsByUserId(userId).subscribe(
+      (data) => {
+        this.referrals = data;
+        this.filteredReferrals = [...this.referrals]; // Create a copy of all referrals
+        this.statusFilter = "All";
+        this.isLoading = false;
+        this.filterReferrals(); // Apply initial filtering
+      },
+      (error) => {
+        console.error("Error fetching referrals", error);
+        this.isLoading = false;
+      }
+    );
+  }
+  
+  filterReferrals() {
+    if (!this.referrals.length) return;
+  
+    this.filteredReferrals = this.referrals.filter((referral) => {
+      const matchesSearch =
+        !this.searchQuery ||
+        referral.name.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+        referral.mobile.includes(this.searchQuery) ||
+        referral.email.toLowerCase().includes(this.searchQuery.toLowerCase());
+  
+      const matchesStatus =
+        !this.statusFilter || 
+        this.statusFilter === 'All' || 
+        referral.attendanceStatus === this.statusFilter;
+  
+      return matchesSearch && matchesStatus;
+    });
+  }
+  
+  // Other existing methods remain the same
   toggleStatus(id: string) {
     this.referralService.toggleStatus(id);
   }
-
+  
   showDetails(referral: Referral) {
     this.selectedReferral = referral;
   }
+  
   goHome() {
     this.router.navigate(["/dashboard"]);
   }
-
+  
   goBack() {
     window.history.back();
   }
-
+  
   logout() {
     this.authService.logout();
     this.router.navigate(["/auth/login"]);
   }
-
-  getReferralsByUserId(userId: string) {
-    this.referralService.getReferralsByUserId(userId).subscribe(
-      (data) => {
-        this.referrals = data;
-        console.log(this.referrals);
-      },
-      (error) => {
-        console.error("Error fetching referrals", error);
-      }
-    );
-  }
-
-  // Utility function to calculate age from DOB
-  calculateAge(dob: string): number {
-    const birthDate = new Date(dob);
-    const today = new Date();
-    let age = today.getFullYear() - birthDate.getFullYear();
-    const monthDifference = today.getMonth() - birthDate.getMonth();
-
-    if (
-      monthDifference < 0 ||
-      (monthDifference === 0 && today.getDate() < birthDate.getDate())
-    ) {
-      age--;
-    }
-    return age;
-  }
-
+  
   searchByName(searchQuery: string) {
     this.referralService.seachReferralByUserId(searchQuery).subscribe(
       (res) => {
-        this.referrals = res; // Set the filtered referrals
+        this.referrals = res;
+        this.filteredReferrals = [...this.referrals];
+        this.filterReferrals();
       },
       (error) => {
         console.error("Error searching referrals:", error);

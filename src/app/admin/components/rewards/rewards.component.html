@@ -1,0 +1,1177 @@
+<div class="flex h-screen bg-gray-100">
+  <!-- Sidenav -->
+  <div
+    class="w-64 bg-gradient-to-b from-blue-900 to-blue-800 text-white shadow-xl transition-all duration-300 ease-in-out"
+  >
+    <!-- Logo Section -->
+    <div class="p-6 border-b border-blue-700/40">
+      <a
+        href="https://aitrichacademy.com/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="flex items-center"
+      >
+        <img
+          src="../../../../assets/images/Aitrich Logo_Artboard 4.png"
+          class="w-32"
+          alt="Aitrich Logo"
+        />
+      </a>
+    </div>
+
+    <!-- Navigation -->
+    <div class="p-4">
+      <p
+        class="text-xs font-medium uppercase tracking-wider text-blue-300 mb-3 px-2"
+      >
+        Main Navigation
+      </p>
+      <ul class="space-y-2">
+        <li>
+          <a
+            class="flex items-center p-3 text-gray-100 rounded-lg hover:bg-blue-700/50 transition-all"
+            routerLink="/admin/dashboard"
+            routerLinkActive="bg-blue-700/70"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5 mr-3"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6z"
+              />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6z"
+              />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2z"
+              />
+            </svg>
+            Dashboard
+          </a>
+        </li>
+        <li>
+          <a
+            class="flex items-center p-3 text-gray-100 rounded-lg hover:bg-blue-700/50 transition-all"
+            routerLink="/admin/users"
+            routerLinkActive="bg-blue-700/70"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5 mr-3"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
+              />
+            </svg>
+            Users
+          </a>
+        </li>
+        <li>
+          <a
+            class="flex items-center p-3 text-gray-100 rounded-lg hover:bg-blue-700/50 transition-all"
+            routerLink="/admin/referrals"
+            routerLinkActive="bg-blue-700/70"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5 mr-3"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+              />
+            </svg>
+            Referrals
+          </a>
+        </li>
+        <li>
+          <a
+            class="flex items-center p-3 text-gray-100 bg-blue-700/70 rounded-lg hover:bg-blue-700/50 transition-all"
+            routerLink="/admin/rewards"
+            routerLinkActive="bg-blue-700/70"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5 mr-3"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+            Rewards
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- User Section with Logout -->
+    <div class="absolute bottom-0 w-64 border-t border-blue-700/40">
+      <div class="p-4">
+        <!-- Direct Logout Button -->
+        <button
+          class="mt-3 flex items-center justify-center w-full p-2 text-blue-200 hover:text-white rounded-lg hover:bg-blue-700/50 transition-all"
+          (click)="logout()"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-5 w-5 mr-3"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+            />
+          </svg>
+          Logout
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Referral Modal -->
+  <div
+    *ngIf="isReferralModalOpen"
+    class="fixed inset-0 bg-black bg-opacity-50 z-40 flex items-center justify-center overflow-auto"
+  >
+    <div
+      class="bg-white rounded-xl shadow-xl w-full max-w-md mx-4 animate-fadeIn z-50"
+    >
+      <!-- Modal Header -->
+      <div class="p-5 border-b flex justify-between items-center">
+        <h3 class="text-lg font-semibold text-gray-800">
+          {{ editMode ? "Edit" : "Add New" }} Reward
+        </h3>
+        <button
+          (click)="closeReferralModal()"
+          class="text-gray-500 hover:text-gray-700 transition"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="p-6">
+        <!-- User Selection -->
+        <div class="mb-4">
+          <label class="block text-gray-700 font-semibold mb-2"
+            >Select User</label
+          >
+          <select
+            [(ngModel)]="selectedUser"
+            (ngModelChange)="onUserSelect()"
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          >
+            <option [ngValue]="null" disabled>-- Select User --</option>
+            <option *ngFor="let user of users" [ngValue]="user">
+              {{ user.name }} - {{ user.email }}
+            </option>
+          </select>
+        </div>
+
+        <!-- Referral Amount -->
+        <div class="mb-4">
+          <label class="block text-gray-700 font-semibold mb-2">
+            Referral Amount
+          </label>
+          <input
+            type="number"
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            [(ngModel)]="referralAmount"
+          />
+
+          <!-- Show calculated new total in real-time -->
+          <div
+            *ngIf="!editMode && referralAmount && previousTotalAmount > 0"
+            class="mt-1 text-sm text-gray-600"
+          >
+            New Total:
+            <span class="font-medium">{{
+              previousTotalAmount + referralAmount | currency : "INR"
+            }}</span>
+          </div>
+        </div>
+
+        <!-- Payment Status -->
+        <div class="mb-4">
+          <label class="block text-gray-700 font-semibold mb-2"
+            >Payment Status</label
+          >
+          <select
+            [(ngModel)]="paymentStatus"
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          >
+            <option [ngValue]="null" disabled>-- Select Status --</option>
+            <option value="pending">Pending</option>
+            <option value="processing">On Processing</option>
+            <option value="paid">Paid</option>
+          </select>
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 font-semibold mb-2">
+            Remarks
+          </label>
+          <textarea
+            type="text"
+            [(ngModel)]="remarks"
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          >
+          </textarea>
+
+          <!-- Show calculated new bonus points total in real-time -->
+          <div
+            *ngIf="!editMode && bonusPoints && previousTotalBonusPoints > 0"
+            class="mt-1 text-sm text-gray-600"
+          >
+            New Total:
+            <span class="font-medium"
+              >{{ previousTotalBonusPoints + bonusPoints }} points</span
+            >
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="p-5 border-t bg-gray-50 flex gap-3 justify-end rounded-b-xl">
+        <button
+          (click)="closeReferralModal()"
+          class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 transition text-gray-700"
+        >
+          Cancel
+        </button>
+
+        <button
+          (click)="resetForm()"
+          class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 transition text-gray-700"
+        >
+          Reset
+        </button>
+
+        <button
+          (click)="saveRewardAndClose()"
+          [disabled]="!selectedUser || !referralAmount || !paymentStatus"
+          class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition disabled:bg-gray-400 disabled:cursor-not-allowed"
+        >
+          {{ editMode ? "Update" : "Save" }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bonus Modal -->
+  <div
+    *ngIf="isBonusModalOpen"
+    class="fixed inset-0 bg-black bg-opacity-50 z-40 flex items-center justify-center overflow-auto"
+  >
+    <div
+      class="bg-white rounded-xl shadow-xl w-full max-w-md mx-4 animate-fadeIn z-50"
+    >
+      <!-- Modal Header -->
+      <div class="p-5 border-b flex justify-between items-center">
+        <h3 class="text-lg font-semibold text-gray-800">
+          {{ editMode ? "Edit" : "Add New" }} Bonus Points
+        </h3>
+        <button
+          (click)="closeBonusModal()"
+          class="text-gray-500 hover:text-gray-700 transition"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="p-6">
+        <!-- User Selection -->
+        <div class="mb-4">
+          <label class="block text-gray-700 font-semibold mb-2"
+            >Select User</label
+          >
+          <select
+            [(ngModel)]="selectedBonusUser"
+            (ngModelChange)="onBonusUserSelect()"
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          >
+            <option [ngValue]="null" disabled>-- Select User --</option>
+            <option *ngFor="let user of users" [ngValue]="user">
+              {{ user.name }} - {{ user.email }}
+            </option>
+          </select>
+        </div>
+
+        <!-- Bonus Points -->
+        <div class="mb-4">
+          <label class="block text-gray-700 font-semibold mb-2">
+            Bonus Points
+          </label>
+          <input
+            type="number"
+            [ngModel]="bonusPoints"
+            (ngModelChange)="bonusPoints = $event"
+            (input)="validateBonusInput($event)"
+            min="1"
+            step="1"
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            [ngClass]="{'border-red-500': bonusInputError}"
+          />
+          <div *ngIf="bonusInputError" class="mt-1 text-sm text-red-600">
+            Please enter a positive whole number (no decimals or zero)
+          </div>
+        
+          <!-- Show calculated new bonus points total in real-time -->
+          <div
+            *ngIf="!editMode && bonusPoints && previousTotalBonusPoints > 0"
+            class="mt-1 text-sm text-gray-600"
+          >
+            New Total:
+            <span class="font-medium"
+              >{{ previousTotalBonusPoints + bonusPoints }} points</span
+            >
+          </div>
+        </div>
+
+        <!-- Remarks -->
+
+        <!-- Payment Status -->
+        <div class="mb-4">
+          <label class="block text-gray-700 font-semibold mb-2"
+            >Payment Status</label
+          >
+          <select
+            [(ngModel)]="bonusPaymentStatus"
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          >
+            <option [ngValue]="null" disabled>-- Select Status --</option>
+            <option value="pending">Pending</option>
+            <option value="processing">On Processing</option>
+            <option value="paid">Paid</option>
+          </select>
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 font-semibold mb-2">
+            Remarks
+          </label>
+          <textarea
+            type="text"
+            [(ngModel)]="remarks"
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          ></textarea>
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="p-5 border-t bg-gray-50 flex gap-3 justify-end rounded-b-xl">
+        <button
+          (click)="closeBonusModal()"
+          class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 transition text-gray-700"
+        >
+          Cancel
+        </button>
+
+        <button
+          (click)="resetBonusForm()"
+          class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 transition text-gray-700"
+        >
+          Reset
+        </button>
+
+        <button
+          (click)="saveBonusAndClose()"
+          [disabled]="!selectedBonusUser || !bonusPoints || !bonusPaymentStatus"
+          class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition disabled:bg-gray-400 disabled:cursor-not-allowed"
+        >
+          {{ editMode ? "Update" : "Save" }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="flex-1 p-10 overflow-y-auto">
+    <div class="flex justify-between items-center mb-6">
+      <h2 class="text-2xl font-bold text-gray-700">Referral Rewards</h2>
+
+      <!-- Add Reward Button -->
+      <div class="flex gap-2">
+        <button
+          (click)="openReferralModal()"
+          class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition flex items-center gap-2"
+        >
+          <span>Add Reward</span>
+        </button>
+
+        <button
+          (click)="openBonusModal()"
+          class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition flex items-center gap-2"
+        >
+          <span>Add Bonus</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="mb-6">
+      <div class="border-b border-gray-200">
+        <nav class="flex -mb-px">
+          <button
+            (click)="activeTab = 'referrals'"
+            class="py-4 px-6 text-center border-b-2 font-medium text-sm"
+            [ngClass]="
+              activeTab === 'referrals'
+                ? 'border-blue-500 text-blue-600'
+                : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+            "
+          >
+            Referral Rewards
+          </button>
+          <button
+            (click)="activeTab = 'bonuses'"
+            class="py-4 px-6 text-center border-b-2 font-medium text-sm"
+            [ngClass]="
+              activeTab === 'bonuses'
+                ? 'border-green-500 text-green-600'
+                : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+            "
+          >
+            Bonus Points
+          </button>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Referrals Tab Content -->
+    <div
+      *ngIf="activeTab === 'referrals'"
+      class="bg-white rounded-lg shadow-md overflow-hidden"
+    >
+      <h3 class="text-lg font-semibold p-4 border-b text-gray-700">
+        Referral Rewards
+      </h3>
+
+      <!-- Search and Filter -->
+      <div class="p-4 bg-gray-50 flex flex-wrap items-center gap-4">
+        <div class="flex-1 min-w-[200px]">
+          <input
+            type="text"
+            placeholder="Search by name..."
+            [(ngModel)]="searchTerm"
+            (ngModelChange)="applyFilters()"
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          />
+        </div>
+        <!-- <div class="min-w-[150px]">
+          <select
+            [(ngModel)]="statusFilter"
+            (ngModelChange)="applyFilters()"
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          >
+            <option value="">All Statuses</option>
+            <option value="pending">Pending</option>
+            <option value="processing">On Processing</option>
+            <option value="paid">Paid</option>
+          </select>
+        </div> -->
+      </div>
+
+      <!-- Referrals Table -->
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              <th
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                User
+              </th>
+              <th
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Amount
+              </th>
+              <!-- <th
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Status
+              </th> -->
+              <th
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Date
+              </th>
+              <th
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Actions
+              </th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            <tr *ngFor="let reward of filteredRewards" class="hover:bg-gray-50">
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="flex items-center">
+                  <div>
+                    <div
+                      class="text-sm font-medium text-blue-600 hover:text-blue-800 cursor-pointer"
+                    >
+                      {{ reward.user.name }}
+                    </div>
+                    <div class="text-sm text-gray-500">
+                      {{ reward.user.email }}
+                    </div>
+                  </div>
+                </div>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="text-sm text-gray-900">
+                  {{ reward.amount | currency : "INR" }}
+                </div>
+              </td>
+              <!-- <td class="px-6 py-4 whitespace-nowrap">
+                <span
+                  [ngClass]="{
+                    'px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full': true,
+                    'bg-yellow-100 text-yellow-800':
+                      reward.status === 'pending',
+                    'bg-blue-100 text-blue-800': reward.status === 'processing',
+                    'bg-green-100 text-green-800': reward.status === 'paid'
+                  }"
+                >
+                  {{ reward.status | titlecase }}
+                </span>
+              </td> -->
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                {{ reward.createdAt | date : "short" }}
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm">
+                <button
+                  (click)="openUserHistoryModal(reward.user)"
+                  class="text-blue-600 hover:text-blue-800 mr-3"
+                >
+                  Show History
+                </button>
+                <!-- <button 
+                                    (click)="editReferral(reward)"
+                                    class="text-gray-600 hover:text-gray-800">
+                                    Edit
+                                </button> -->
+              </td>
+            </tr>
+
+            <!-- Empty state -->
+            <tr *ngIf="filteredRewards.length === 0">
+              <td colspan="5" class="px-6 py-10 text-center text-gray-500">
+                No referral rewards found. Add a new referral to get started.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!--Reward History Modal -->
+    <div
+    *ngIf="isUserHistoryModalOpen"
+    class="fixed inset-0 bg-black bg-opacity-50 z-40 flex items-center justify-center overflow-auto"
+  >
+    <div
+      class="bg-white rounded-xl shadow-xl w-full max-w-4xl mx-4 animate-fadeIn z-50"
+      [ngClass]="{ 'animate-slideIn': isUserHistoryModalOpen }"
+    >
+      <!-- Modal Header -->
+      <div class="p-5 border-b flex justify-between items-center">
+        <h3 class="text-lg font-semibold text-gray-800">
+          User History: {{ selectedUserHistory?.name }}
+        </h3>
+        <button
+          (click)="closeUserHistoryModal()"
+          class="text-gray-500 hover:text-gray-700 transition"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+      </div>
+  
+      <!-- Modal Body -->
+      <div class="p-6">
+        <!-- Search and Filter -->
+        <div class="mb-6 p-4 bg-gray-50 rounded-lg flex flex-wrap items-center gap-4">
+          <div class="flex-1 min-w-[200px] md:min-w-[150px]">
+            <label class="block text-sm font-medium text-gray-700 mb-1">Start Date</label>
+            <input
+              type="date"
+              [(ngModel)]="startDate"
+              (ngModelChange)="applyHistoryFilters()"
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            />
+          </div>
+          <div class="flex-1 min-w-[200px] md:min-w-[150px]">
+            <label class="block text-sm font-medium text-gray-700 mb-1">End Date</label>
+            <input
+              type="date"
+              [(ngModel)]="endDate"
+              (ngModelChange)="applyHistoryFilters()"
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            />
+          </div>
+          <div class="flex-1 min-w-[200px] md:min-w-[150px]">
+            <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+            <select
+              [(ngModel)]="historyStatusFilter"
+              (ngModelChange)="applyHistoryFilters()"
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            >
+              <option value="">All Statuses</option>
+              <option value="pending">Pending</option>
+              <option value="processing">Processing</option>
+              <option value="paid">Paid</option>
+            </select>
+          </div>
+          <div class="flex-1 min-w-[120px] md:min-w-[100px] self-end">
+            <button
+              (click)="clearHistoryFilters()"
+              class="w-full px-3 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-lg transition"
+            >
+              Clear Filters
+            </button>
+          </div>
+        </div>
+  
+        <!-- History Table -->
+        <h4 class="text-lg font-medium text-gray-700 mb-3">Reward History</h4>
+        <div class="overflow-x-auto">
+          <div class="max-h-80 overflow-y-auto border rounded-lg">
+          <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+              <tr>
+                <!-- Add sticky positioning to the header -->
+                <th class="sticky top-0 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider bg-gray-50">
+                  Date
+                </th>
+                <th class="sticky top-0 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider bg-gray-50">
+                  Amount
+                </th>
+                <th class="sticky top-0 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider bg-gray-50">
+                  Remarks
+                </th>
+                <th class="sticky top-0 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider bg-gray-50">
+                  Status
+                </th>
+                <th class="sticky top-0 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider bg-gray-50">
+                  Actions
+                </th>
+              </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+              <tr
+                *ngFor="let reward of filteredRewardHistory"
+                class="hover:bg-gray-50"
+              >
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  {{ reward.date | date : "short" }}
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <div class="text-sm text-gray-900">
+                    {{ reward.amount | currency : "INR" }}
+                  </div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  {{reward.remarks}}
+                  </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <span
+                    [ngClass]="{
+                      'px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full': true,
+                      'bg-yellow-100 text-yellow-800': reward.status === 'pending',
+                      'bg-blue-100 text-blue-800': reward.status === 'processing',
+                      'bg-green-100 text-green-800': reward.status === 'paid'
+                    }"
+                  >
+                    {{ reward.status | titlecase }}
+                  </span>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                  <div class="relative">
+                    <select
+                      [disabled]="loadingStatus === reward._id"
+                      [value]="reward.status"
+                      (change)="updateStatus(reward._id, $event)"
+                      class="block w-32 py-1.5 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"
+                    >
+                      <option value="pending">Pending</option>
+                      <option value="processing">Processing</option>
+                      <option value="paid">Paid</option>
+                    </select>
+  
+                    <!-- Optional loading indicator -->
+                    <div
+                      *ngIf="loadingStatus === reward._id"
+                      class="absolute right-2 top-2"
+                    >
+                      <div
+                        class="animate-spin h-4 w-4 border-2 border-blue-500 rounded-full border-t-transparent"
+                      ></div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+  
+              <!-- Empty state -->
+              <tr *ngIf="filteredRewardHistory.length === 0">
+                <td colspan="4" class="px-6 py-10 text-center text-gray-500">
+                  No rewards history found for this user with the current filters.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Modal Footer -->
+      <div class="p-5 border-t bg-gray-50 flex justify-end rounded-b-xl">
+        <button
+          (click)="closeUserHistoryModal()"
+          class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 transition text-gray-700"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+
+    <!-- // bonus history -->
+    <div
+      *ngIf="isBonusHistoryModalOpen"
+      class="fixed inset-0 bg-black bg-opacity-50 z-40 flex items-center justify-center overflow-auto p-4"
+    >
+      <div
+        class="bg-white rounded-xl shadow-xl w-full max-w-4xl mx-auto animate-fadeIn z-50 flex flex-col max-h-[90vh]"
+        [ngClass]="{ 'animate-slideIn': isBonusHistoryModalOpen }"
+      >
+        <!-- Modal Header (Fixed) -->
+        <div class="p-5 border-b flex justify-between items-center">
+          <h3 class="text-lg font-semibold text-gray-800">
+            User History: {{ selectedBonusUser?.name }}
+          </h3>
+          <button
+            (click)="closeUserBonusHistoryModal()"
+            class="text-gray-500 hover:text-gray-700 transition"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
+
+        <!-- Modal Body (Scrollable) -->
+        <div class="p-6 overflow-y-auto flex-grow">
+          <div class="mb-6 p-4 bg-blue-50 rounded-lg">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div>
+                <p class="text-sm text-gray-600">Email</p>
+                <p class="font-medium">
+                  {{ selectedBonusUser?.email }}
+                </p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-600">Total Bonus Points</p>
+                <p class="font-medium">
+                  {{ selectedBonusHistory?.bonusPoints }} points
+                </p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-600">Total Amount</p>
+                <p class="font-medium">
+                  {{ selectedBonusHistory?.amount | currency : "INR" }}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Filters -->
+          <div class="mb-4 p-4 bg-gray-50 rounded-lg">
+            <h4 class="text-md font-medium text-gray-700 mb-3">Filters</h4>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <!-- Date Range Filter -->
+              <div>
+                <label class="block text-sm text-gray-600 mb-1"
+                  >From Date</label
+                >
+                <input
+                  type="date"
+                  [(ngModel)]="startDate"
+                  (ngModelChange)="applyHistoryFilters()"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                />
+              </div>
+              <div>
+                <label class="block text-sm text-gray-600 mb-1">To Date</label>
+                <input
+                  type="date"
+                  [(ngModel)]="endDate"
+                  (ngModelChange)="applyHistoryFilters()"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                />
+              </div>
+              <!-- Status Filter -->
+              <div>
+                <label class="block text-sm text-gray-600 mb-1">Status</label>
+                <select
+                  [(ngModel)]="historyStatusFilter"
+                  (ngModelChange)="applyHistoryFilters()"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                >
+                  <option value="">All Statuses</option>
+                  <option value="pending">Pending</option>
+                  <option value="processing">Processing</option>
+                  <option value="paid">Paid</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- History Table -->
+          <h4 class="text-lg font-medium text-gray-700 mb-3">Bonus History</h4>
+          <div class="overflow-x-auto rounded-lg border border-gray-200">
+            <table class="min-w-full divide-y divide-gray-200">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Date
+                  </th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Bonus Points
+                  </th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Amount
+                  </th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Remarks
+                  </th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Status
+                  </th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Actions
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="bg-white divide-y divide-gray-200">
+                <tr *ngFor="let entry of filteredBonusHistory" class="hover:bg-gray-50">
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {{ entry.date | date : "short" }}
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="text-sm text-gray-900" *ngIf="!entry.editing">
+                      {{ entry.bonusPoints }} points
+                    </div>
+                    <input 
+                    *ngIf="entry.editing" 
+                    type="number" 
+                    [attr.data-bonus-points-id]="entry._id"
+                    [(ngModel)]="entry.editBonusPoints" 
+                
+                    class="w-24 px-2 py-1 border border-blue-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-sm" 
+                  />
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="text-sm text-gray-900" *ngIf="!entry.editing">
+                      {{ entry.amount | currency : "INR" }}
+                    </div>
+                    <div *ngIf="entry.editing" class="text-sm text-gray-900">
+                      {{ entry.editAmount | currency : "INR" }}
+                    </div>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="text-sm text-gray-900" *ngIf="!entry.editing">
+                      {{ entry.remarks || "N/A" }}
+                    </div>
+                    <input 
+                    *ngIf="entry.editing" 
+                    type="text" 
+                    [attr.data-remarks-id]="entry._id"
+                    [(ngModel)]="entry.editRemarks" 
+                    class="w-full px-2 py-1 border border-blue-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-sm" 
+                  />
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                    <div class="relative">
+                      <select
+                        [disabled]="loadingStatus === entry._id"
+                        [value]="entry.status"
+                        (change)="updateStatusBonus(entry._id, $event)"
+                        class="block w-32 py-1.5 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"
+                      >
+                        <option value="pending">Pending</option>
+                        <option value="processing">Processing</option>
+                        <option value="paid">Paid</option>
+                      </select>
+          
+                      <!-- Optional loading indicator -->
+                      <div *ngIf="loadingStatus === entry._id" class="absolute right-2 top-2">
+                        <div class="animate-spin h-4 w-4 border-2 border-blue-500 rounded-full border-t-transparent"></div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                    <button 
+                      *ngIf="!entry.editing"
+                      (click)="startEditing(entry)"
+                      class="text-blue-500 hover:text-blue-700 mr-3"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                      </svg>
+                    </button>
+                    <div *ngIf="entry.editing" class="flex">
+                      <button 
+                        (click)="saveEditing(entry)"
+                        class="text-green-500 hover:text-green-700 mr-2"
+                        [disabled]="loadingEntry === entry._id"
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                      </button>
+                      <button 
+                        (click)="cancelEditing(entry)"
+                        class="text-red-500 hover:text-red-700"
+                        [disabled]="loadingEntry === entry._id"
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                      </button>
+                      <div *ngIf="loadingEntry === entry._id" class="ml-2">
+                        <div class="animate-spin h-4 w-4 border-2 border-blue-500 rounded-full border-t-transparent"></div>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+          
+                <!-- Empty state -->
+                <tr *ngIf="filteredBonusHistory.length === 0">
+                  <td colspan="6" class="px-6 py-10 text-center text-gray-500">
+                    No bonus history found for this user.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Modal Footer (Fixed) -->
+        <div class="p-5 border-t bg-gray-50 flex justify-end rounded-b-xl">
+          <button
+            (click)="closeUserBonusHistoryModal()"
+            class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 transition text-gray-700"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bonuses Tab Content -->
+    <div
+      *ngIf="activeTab === 'bonuses'"
+      class="bg-white rounded-lg shadow-md overflow-hidden"
+    >
+      <h3 class="text-lg font-semibold p-4 border-b text-gray-700">
+        Bonus Points
+      </h3>
+
+      <!-- Search and Filter -->
+      <div class="p-4 bg-gray-50 flex flex-wrap items-center gap-4">
+        <div class="flex-1 min-w-[200px]">
+          <input
+            type="text"
+            placeholder="Search by name..."
+            [(ngModel)]="bonusSearchTerm"
+            (ngModelChange)="applyBonusFilters()"
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          />
+        </div>
+        <!-- <div class="min-w-[150px]">
+                    <select
+                        [(ngModel)]="bonusStatusFilter"
+                        (ngModelChange)="applyBonusFilters()"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                        <option value="">All Statuses</option>
+                        <option value="pending">Pending</option>
+                        <option value="processing">On Processing</option>
+                        <option value="paid">Paid</option>
+                    </select>
+                </div> -->
+      </div>
+
+      <!-- Bonuses Table -->
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              <th
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                User
+              </th>
+              <th
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Bonus Points
+              </th>
+              <!-- <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th> -->
+              <th
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Date
+              </th>
+              <th
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Actions
+              </th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            <tr *ngFor="let bonus of filteredBonuses" class="hover:bg-gray-50">
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="flex items-center">
+                  <div>
+                    <div
+                      class="text-sm font-medium text-blue-600 hover:text-blue-800 cursor-pointer"
+                    >
+                      {{ bonus.user.name }}
+                    </div>
+                    <div class="text-sm text-gray-500">
+                      {{ bonus.user.email }}
+                    </div>
+                  </div>
+                </div>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="text-sm text-gray-900">
+                  {{ bonus.bonusPoints }} points
+                </div>
+              </td>
+              <!-- <td class="px-6 py-4 whitespace-nowrap">
+                                <span [ngClass]="{
+                                    'px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full': true,
+                                    'bg-yellow-100 text-yellow-800': bonus.status === 'pending',
+                                    'bg-blue-100 text-blue-800': bonus.status === 'processing',
+                                    'bg-green-100 text-green-800': bonus.status === 'paid'
+                                }">
+                                    {{bonus.status | titlecase}}
+                                </span>
+                            </td> -->
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                {{ bonus.createdAt | date : "short" }}
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm">
+                <button
+                  (click)="openUserBonusHistoryModal(bonus.user)"
+                  class="text-blue-600 hover:text-blue-800 mr-3"
+                >
+                  Show History
+                </button>
+                <!-- <button 
+                                    
+                                    class="text-gray-600 hover:text-gray-800">
+                                    Edit
+                                </button> -->
+              </td>
+            </tr>
+
+            <!-- Empty state -->
+            <tr *ngIf="filteredBonuses.length === 0">
+              <td colspan="5" class="px-6 py-10 text-center text-gray-500">
+                No bonus points found. Add new bonus points to get started.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

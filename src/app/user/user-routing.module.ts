@@ -4,7 +4,7 @@ import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ReferralFormComponent } from './components/referral-form/referral-form.component';
 import { ReferralsComponent } from './components/referrals/referrals.component';
-import { FormElementsComponent } from './components/form-elements/form-elements.component';
+import { LeaderboardComponent } from './components/leaderboard/leaderboard.component';
 
 const routes: Routes = [
   // { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -12,7 +12,8 @@ const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
   { path: 'refer', component: ReferralFormComponent },  // Dynamic path for referral form
   { path: 'referrals/:userId', component: ReferralsComponent },
-  { path: 'form', component: FormElementsComponent }
+  {path: "leaderboard/:userId", component: LeaderboardComponent}
+
 ];
 
 @NgModule({

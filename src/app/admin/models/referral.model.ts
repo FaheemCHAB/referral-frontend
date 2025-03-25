@@ -9,7 +9,9 @@ export interface Referral {
   isActive: boolean;
   place: string;
   qualification: string;
-  dob: string;
+  passOutYear: string;
+  attendanceStatus: "not-attended" | "attended" | "registered" | "joined";
   email: string;
   createdAt: Date;
+  status: string; // Add this field
 }

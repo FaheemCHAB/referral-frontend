@@ -1,0 +1,231 @@
+.grid-container {
+  margin: 20px;
+}
+
+.dashboard-card {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  right: 15px;
+  bottom: 15px;
+}
+
+.more-button {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+}
+
+.dashboard-card-content {
+  text-align: center;
+}
+
+
+/* Global Styles */
+:host {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Grid Container for metrics */
+.grid-container {
+  margin: 20px 0;
+}
+
+/* Material Card Styling */
+.dashboard-card {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  right: 15px;
+  bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.more-button {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+}
+
+.dashboard-card-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  overflow: auto;
+}
+
+/* Navigation Cards */
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-0.25rem);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Metrics styling */
+.metric-container, .attendance-container, .registration-container, .summary-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Referrals card */
+.metric-value {
+  font-size: 48px;
+  font-weight: bold;
+  color: #1e3a8a; /* Tailwind blue-900 */
+}
+
+.metric-label {
+  font-size: 16px;
+  color: #6b7280; /* Tailwind gray-500 */
+  margin-bottom: 20px;
+}
+
+.metric-change {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.trend-up {
+  color: #10b981; /* Tailwind green-500 */
+}
+
+.trend-down {
+  color: #ef4444; /* Tailwind red-500 */
+}
+
+/* Attendance card */
+.attendance-chart {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.attendance-chart-inner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.attendance-percentage {
+  font-size: 32px;
+  font-weight: bold;
+  color: #1e3a8a; /* Tailwind blue-900 */
+}
+
+.attendance-details {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.attendance-item {
+  text-align: center;
+  padding: 0 15px;
+}
+
+.attendance-value {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.attendance-value.attended {
+  color: #10b981; /* Tailwind green-500 */
+}
+
+.attendance-value.unattended {
+  color: #ef4444; /* Tailwind red-500 */
+}
+
+.attendance-label {
+  font-size: 14px;
+  color: #6b7280; /* Tailwind gray-500 */
+}
+
+/* Registration card */
+.registration-value {
+  font-size: 48px;
+  font-weight: bold;
+  color: #1e3a8a; /* Tailwind blue-900 */
+  margin-bottom: 5px;
+}
+
+.registration-label {
+  font-size: 16px;
+  color: #6b7280; /* Tailwind gray-500 */
+  margin-bottom: 20px;
+}
+
+.registration-chart {
+  width: 100%;
+  height: 200px;
+}
+
+/* Summary card */
+.summary-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.summary-item {
+  width: 45%;
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  border-radius: 8px;
+  background-color: #f9fafb; /* Tailwind gray-50 */
+}
+
+.summary-item mat-icon {
+  margin-right: 15px;
+  color: #1e3a8a; /* Tailwind blue-900 */
+  font-size: 28px;
+  height: 28px;
+  width: 28px;
+}
+
+.summary-details {
+  text-align: left;
+}
+
+.summary-value {
+  font-size: 20px;
+  font-weight: bold;
+  color: #1e3a8a; /* Tailwind blue-900 */
+}
+
+.summary-label {
+  font-size: 14px;
+  color: #6b7280; /* Tailwind gray-500 */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .summary-item {
+    width: 100%;
+  }
+}

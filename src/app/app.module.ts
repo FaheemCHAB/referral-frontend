@@ -8,7 +8,7 @@ import { AppRoutingModule } from "./app-routing.module";
 import { BrowserModule } from "@angular/platform-browser";
 import { LandingPageComponent } from "./landing-page.component";
 import { AuthRoutingModule } from "./auth/auth-routing.module";
-import { NgxIntlTelInputModule } from "ngx-intl-tel-input";
+import { ToastrModule } from "ngx-toastr";
 
 
 @NgModule({
@@ -18,15 +18,21 @@ import { NgxIntlTelInputModule } from "ngx-intl-tel-input";
     ],
     imports: [
         BrowserModule,
-        NgxIntlTelInputModule,
         AppRoutingModule,
         CommonModule,
         AdminRoutingModule,
         UserRoutingModule,
         AuthRoutingModule,
+        ToastrModule.forRoot({
+            timeOut: 3000,
+            positionClass: 'toast-top-right',
+            preventDuplicates: true,
+            progressBar: true
+          })
     ],
     providers: [
      provideHttpClient(),
+
     ],
     bootstrap: [AppComponent]
   })

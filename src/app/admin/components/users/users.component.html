@@ -1,0 +1,669 @@
+<div class="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 p-8">
+  <div class="container mx-auto bg-white rounded-xl shadow-2xl overflow-hidden relative">
+    <!-- Back Button -->
+    <button
+      (click)="goBack()"
+      class="absolute top-4 left-4 flex items-center space-x-2 px-4 py-2 bg-white hover:bg-blue-100 text-black rounded-lg shadow-lg transition-all z-10"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="w-6 h-6"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M15 19l-7-7 7-7"
+        />
+      </svg>
+      <span>Back</span>
+    </button>
+
+    <!-- Logout Button -->
+    <!-- <button
+      (click)="logout()"
+      class="absolute top-4 right-4 bg-white hover:bg-blue-100 text-black font-semibold px-4 py-2 rounded-lg shadow-lg transition-all z-10"
+    >
+      <i class="fas fa-lock mr-2"></i> Logout
+    </button> -->
+
+    <div class="bg-gradient-to-r from-blue-600 to-blue-400 p-6">
+      <h1 class="text-4xl font-extrabold text-white text-center tracking-wider">Users Management</h1>
+    </div>
+
+    <!-- Rest of the previous content remains the same -->
+    <div class="p-6">
+      <!-- Search and Filter Section -->
+      <div class="flex justify-between items-center mb-6">
+        <div class="flex space-x-4">
+          <div class="relative">
+            <input 
+              type="text"
+              placeholder="Search users..."
+              class="pl-10 pr-4 py-2 w-80 border-2 border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-400 transition duration-300"
+              [(ngModel)]="searchQuery"
+              (input)="searchUsers(searchQuery)"
+            />
+            <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-blue-400"></i>
+            <button
+              class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-800"
+              (click)="clearReferredByFilter()"
+              *ngIf="searchQuery"
+            >
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+          <!-- <button 
+            class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
+            (click)="openFilterPopup()"
+          >
+            Filter
+          </button>
+          <button 
+            class="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition"
+            (click)="getAllUsers()"
+          >
+            Clear Filter
+          </button> -->
+        </div>
+        <button 
+          class="px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition"
+          (click)="openCreateUserModal()"
+        >
+          + Create User
+        </button>
+      </div>
+
+      <!-- Users Table -->
+      <div class="overflow-x-auto">
+        <div 
+          class="max-h-[400px] overflow-auto hide-scrollbar"
+          *ngIf="users.length > 0; else noDataTemplate"
+        >
+          <table class="w-full bg-white shadow-md rounded-lg overflow-hidden">
+            <thead class="bg-blue-600 sticky top-0 z-10">
+              <tr>
+                <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Name</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Mobile</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Status</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">View More</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Edit</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+              @for (user of users; track user._id) {
+              <tr class="hover:bg-blue-50 transition duration-200">
+                <td class="px-6 py-4">{{ user.name }}</td>
+                <td class="px-6 py-4">{{ user.mobile }}</td>
+                <td class="px-6 py-4">
+                  <label class="relative inline-flex items-center cursor-pointer">
+                    <input
+                      type="checkbox"
+                      class="sr-only peer"
+                      [checked]="user.isActive"
+                      (change)="toggleUserStatus(user)"
+                    />
+                    <div
+                      class="w-11 h-6 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-300 
+                      rounded-full peer dark:bg-red-700 peer-checked:after:translate-x-full 
+                    peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] 
+                    after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 
+                    after:transition-all dark:border-red-600 peer-checked:bg-green-500"
+                    ></div>
+                  </label>
+                </td>
+                <td class="px-6 py-4">
+                  <svg
+                    (click)="showDetails(user)"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-5 h-5 cursor-pointer hover:text-blue-500 transition"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"
+                    />
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                    />
+                  </svg>
+                </td>
+                <td class="px-6 py-4">
+                  <svg
+                    (click)="editUser(user)"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-6 h-6 cursor-pointer hover:text-blue-400 transition duration-200"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M16.862 4.487c.426-.425 1.115-.425 1.54 0l1.11 1.11c.425.425.425 1.114 0 1.539l-9.193 9.193-2.774.693a.75.75 0 0 1-.92-.92l.693-2.774 9.193-9.193ZM19.5 11.25v6a2.25 2.25 0 0 1-2.25 2.25h-12a2.25 2.25 0 0 1-2.25-2.25v-12A2.25 2.25 0 0 1 5.25 3h6"
+                    />
+                  </svg>
+                </td>
+              </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- No Data Template -->
+      <ng-template #noDataTemplate>
+        <div class="p-6 text-center bg-blue-100 rounded-lg">
+          <h2 class="text-xl font-bold text-gray-800">No Data Available</h2>
+          <p class="text-gray-600">
+            Try adjusting your search or filter criteria.
+          </p>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+<!-- </div> -->
+
+    <!-- Create User Modal -->
+    @if (showCreateUserModal) {
+      <div
+        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+      >
+        <div class="bg-white p-6 rounded-lg w-96">
+          <h2 class="text-2xl font-bold mb-4">Create User</h2>
+          @if (isCreatingUser) {
+            <div class="absolute inset-0 bg-white bg-opacity-90 backdrop-blur-sm flex items-center justify-center z-10 rounded-lg transition-all duration-300 ease-in-out">
+              <div class="text-center p-6 bg-blue-50 rounded-lg shadow-md border border-blue-100 max-w-xs">
+                <!-- Spinner animation -->
+                <div class="flex justify-center mb-4">
+                  <svg class="animate-spin h-10 w-10 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                </div>
+                
+                <!-- Message with icon -->
+                <div class="flex items-center justify-center mb-2">
+                  <svg class="w-5 h-5 text-blue-500 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+                  </svg>
+                  <h3 class="text-blue-800 font-semibold">Processing</h3>
+                </div>
+                
+                <!-- Description -->
+                <p class="text-blue-700 text-sm">{{ creationMessage }}</p>
+                
+                <!-- Progress dots -->
+                <div class="flex justify-center mt-4 space-x-1">
+                  <div class="w-2 h-2 bg-blue-600 rounded-full animate-pulse"></div>
+                  <div class="w-2 h-2 bg-blue-600 rounded-full animate-pulse" style="animation-delay: 0.2s"></div>
+                  <div class="w-2 h-2 bg-blue-600 rounded-full animate-pulse" style="animation-delay: 0.4s"></div>
+                </div>
+              </div>
+            </div>
+          }
+          <form (ngSubmit)="createUser()" #userForm="ngForm">
+            <!-- Name -->
+            <div class="mb-4">
+              <label class="block text-gray-700 mb-2">Name</label>
+              <input
+                type="text"
+                [(ngModel)]="formData.name"
+                name="name"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                required
+                minlength="3"
+                maxlength="50"
+                pattern="^[a-zA-Z]+( [a-zA-Z]+)*$"
+                #name="ngModel"
+              />
+              <div class="text-red-500 min-h-[1rem]">
+                <small
+                  *ngIf="name.invalid && (name.touched || userForm.submitted)"
+                >
+                  Name is required and must be 3-50 alphabetic characters.
+                </small>
+              </div>
+            </div>
+    
+            <!-- Email -->
+            <div class="mb-4">
+              <label class="block text-gray-700 mb-2">Email</label>
+              <input
+                type="email"
+                [(ngModel)]="formData.email"
+                name="email"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                required
+                email
+                #email="ngModel"
+              />
+              <div class="text-red-500 min-h-[1rem]">
+                <small
+                  *ngIf="email.invalid && (email.touched || userForm.submitted)"
+                >
+                  A valid email address is required.
+                </small>
+                <p *ngIf="errorMessages?.email" class="text-red-500 text-sm">
+                  {{ errorMessages.email }}
+                </p>
+              </div>
+            </div>
+    
+            <!-- Mobile -->
+            <div class="mb-4">
+              <label 
+                for="mobile"
+                class="block text-sm font-medium text-gray-700 mb-2"
+              >Mobile</label>
+              
+              <div class="relative">
+                <input
+                  #mobilenumber
+                  pattern="^\+[1-9]{1}[0-9]{7,14}$"
+                  type="tel"
+                  id="phone"
+                  class="w-[333px] px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" 
+                  [ngClass]="{
+                    'border-gray-300 focus:ring-blue-500 focus:border-blue-500': !mobile.invalid || !mobile.touched,
+                    'border-red-300 focus:ring-red-500 focus:border-red-500': mobile.invalid && mobile.touched
+                  }"
+                  name="mobile"
+                  [(ngModel)]="formData.mobile"
+                  #mobile="ngModel"
+                  required
+                >
+              </div>
+              <div class="text-red-500 min-h-[1rem]">
+                <small *ngIf="mobile.invalid && (mobile.touched || userForm.submitted)">
+                  <span *ngIf="mobile.errors?.['required']">
+                    A valid mobile number is required.
+                  </span>
+                  <span *ngIf="mobile.errors?.['invalidPhone']">
+                    {{ mobile.errors?.['errorMessage'] || 'Invalid phone number format.' }}
+                  </span>
+                </small>
+                <p *ngIf="errorMessages?.mobile" class="text-red-500 text-sm">
+                  {{ errorMessages.mobile }}
+                </p>
+              </div>
+            </div>
+    
+            <!-- Username -->
+            <div class="mb-4">
+              <label class="block text-gray-700 mb-2">Username</label>
+              <input
+                type="text"
+                [(ngModel)]="formData.username"
+                name="username"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                required
+                minlength="3"
+                maxlength="50"
+                pattern="^[_@!*-]?[A-Za-z0-9_@!*-]{2,49}$"
+                #username="ngModel"
+              />
+              <div class="text-red-500 min-h-[1rem]">
+                <small
+                  *ngIf="
+                    username.invalid && (username.touched || userForm.submitted)
+                  "
+                >
+                  Username must be 3-50 characters and can start with _ or
+                  &commat; and can contain letters, numbers, underscores, or
+                  &commat;.
+                </small>
+                <p *ngIf="errorMessages?.username" class="text-red-500 text-sm">
+                  {{ errorMessages.username }}
+                </p>
+              </div>
+            </div>
+    
+            <!-- Password -->
+            <div class="mb-6 relative">
+              <label class="block text-gray-700 mb-2">Password</label>
+              <div class="relative">
+                <input
+                  [type]="showPassword ? 'text' : 'password'"
+                  [(ngModel)]="formData.password"
+                  name="password"
+                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  required
+                  minlength="6"
+                  #password="ngModel"
+                />
+                <span
+                  class="absolute right-3 top-1/2 transform -translate-y-1/2 flex items-center text-gray-500 cursor-pointer"
+                  (click)="togglePasswordVisibility()"
+                >
+                  <svg
+                    *ngIf="!showPassword"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-5 h-5"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M3.98 8.223A10.477 10.477 0 0 0 1.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.451 10.451 0 0 1 12 4.5c4.756 0 8.773 3.162 10.065 7.498a10.522 10.522 0 0 1-4.293 5.774M6.228 6.228 3 3m3.228 3.228 3.65 3.65m7.894 7.894L21 21m-3.228-3.228-3.65-3.65m0 0a3 3 0 1 0-4.243-4.243m4.242 4.242L9.88 9.88"
+                    />
+                  </svg>
+                  <svg
+                    *ngIf="showPassword"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-5 h-5"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"
+                    />
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                    />
+                  </svg>
+                </span>
+              </div>
+              <div class="text-red-500 min-h-[1rem]">
+                <small *ngIf="(password.invalid && (password.touched || userForm.submitted)) || errorMessages.password">
+                  <span *ngIf="password.errors?.['required']">
+                    Password is required.
+                  </span>
+                  <span *ngIf="password.errors?.['minlength'] || (formData.password && formData.password.length < 6)">
+                    Password must be at least 6 characters.
+                  </span>
+                </small>
+                <p *ngIf="errorMessages?.password" class="text-red-500 text-sm">
+                  {{ errorMessages.password }}
+                </p>
+              </div>
+            </div>
+    
+            <!-- Submit and Cancel Buttons -->
+            <div class="flex justify-end gap-4">
+              <button
+                type="button"
+                class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600"
+                (click)="cancel(userForm)"
+                [disabled]="isCreatingUser"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+              >
+              @if (isCreatingUser) {
+                <span class="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></span>
+              }
+                Create
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    }
+
+    <div class="fixed bottom-4 right-4 z-50">
+      @for (toast of activeToasts; track toast.id) {
+        <div 
+          class="mb-2 p-4 rounded-lg shadow-lg max-w-xs animate-fadeIn flex items-start" 
+          [ngClass]="{
+            'bg-green-100 border-l-4 border-green-500': toast.type === 'success',
+            'bg-red-100 border-l-4 border-red-500': toast.type === 'error',
+            'bg-blue-100 border-l-4 border-blue-500': toast.type === 'info'
+          }"
+        >
+          <div class="flex-grow">
+            <h4 class="font-bold" 
+              [ngClass]="{
+                'text-green-700': toast.type === 'success',
+                'text-red-700': toast.type === 'error',
+                'text-blue-700': toast.type === 'info'
+              }">
+              {{ toast.title }}
+            </h4>
+            <p class="text-sm mt-1">{{ toast.message }}</p>
+          </div>
+          <button 
+            class="ml-2 text-gray-500 hover:text-gray-700" 
+            (click)="removeToast(toast.id)"
+          >
+            ×
+          </button>
+        </div>
+      }
+    </div>
+
+    <!-- Edit User Modal -->
+    @if (showEditUserModal) {
+    <div
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+    >
+      <div class="bg-white p-6 rounded-lg w-96">
+        <h2 class="text-2xl font-bold mb-4">Edit User</h2>
+        <form (ngSubmit)="updateUser()" #userForm="ngForm">
+          <div class="mb-4">
+            <label class="block text-gray-700 mb-2">Name</label>
+            <input
+              type="text"
+              [(ngModel)]="formData.name"
+              name="name"
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              required
+              pattern="^[a-zA-Z]+( [a-zA-Z]+)*$"
+              #name="ngModel"
+            />
+            <small
+              class="text-red-500"
+              *ngIf="name.invalid && (name.touched || userForm.submitted)"
+            >
+              Name is required and must be 3-50 alphabetic characters.
+            </small>
+          </div>
+          <div class="mb-4">
+            <label class="block text-gray-700 mb-2">Email</label>
+            <input
+              type="email"
+              [(ngModel)]="formData.email"
+              name="email"
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              required
+              #email="ngModel"
+              email
+            />
+            <small
+              class="text-red-500"
+              *ngIf="email.invalid && (email.touched || userForm.submitted)"
+            >
+              A valid email address is required.
+            </small>
+            <p *ngIf="errorMessages?.email" class="text-red-500 text-sm">
+              {{ errorMessages.email }}
+            </p>
+          </div>
+          <div class="mb-4">
+            <label class="block text-gray-700 mb-2">Mobile</label>
+            <input
+            #mobilenumber
+            pattern="^\+[1-9]{1}[0-9]{7,14}$"
+            type="tel"
+            id="phone"
+            class="w-[333px] pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
+            name="mobile"
+            [(ngModel)]="formData.mobile"
+            #mobile="ngModel"
+            required
+          > 
+            <small
+              class="text-red-500"
+              *ngIf="mobile.invalid && (mobile.touched || userForm.submitted)"
+            >
+              A valid mobile number is required.
+            </small>
+            <p *ngIf="errorMessages?.mobile" class="text-red-500 text-sm">
+              {{ errorMessages.mobile }}
+            </p>
+          </div>
+          <div class="mb-4">
+            <label class="block text-gray-700 mb-2">Username</label>
+            <input
+              type="text"
+              [(ngModel)]="formData.username"
+              name="username"
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              required
+              minlength="3"
+              maxlength="50"
+              pattern="^[_@]?[A-Za-z0-9_@]{2,49}$"
+              #username="ngModel"
+            />
+            <small
+              class="text-red-500"
+              *ngIf="
+                username.invalid && (username.touched || userForm.submitted)
+              "
+            >
+              Username must be 3-50 characters and can start with _ or
+              &commat; and can contain letters, numbers, underscores, or
+              &commat;.
+            </small>
+            <p *ngIf="errorMessages?.username" class="text-red-500 text-sm">
+              {{ errorMessages.username }}
+            </p>
+          </div>
+          <div class="mb-4 relative">
+            <label class="block text-gray-700 mb-2">Password</label>
+            <input
+              type="password"
+              [type]="showPassword ? 'text' : 'password'"
+              [(ngModel)]="formData.password"
+              name="password"
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              required
+              #password="ngModel"
+            />
+            <span
+              class="absolute inset-y-0 right-3 flex items-center text-gray-500 cursor-pointer translate-y-4"
+              (click)="togglePasswordVisibility()"
+            >
+              <svg
+                *ngIf="!showPassword"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-5 h-5"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M3.98 8.223A10.477 10.477 0 0 0 1.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.451 10.451 0 0 1 12 4.5c4.756 0 8.773 3.162 10.065 7.498a10.522 10.522 0 0 1-4.293 5.774M6.228 6.228 3 3m3.228 3.228 3.65 3.65m7.894 7.894L21 21m-3.228-3.228-3.65-3.65m0 0a3 3 0 1 0-4.243-4.243m4.242 4.242L9.88 9.88"
+                />
+              </svg>
+              <svg
+                *ngIf="showPassword"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-5 h-5"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"
+                />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                />
+              </svg>
+            </span>
+            <small
+              class="text-red-500"
+              *ngIf="
+                password.invalid && (password.touched || userForm.submitted)
+              "
+            >
+              Password must be at least 6 characters.
+            </small>
+          </div>
+          <div class="flex justify-end gap-4">
+            <button
+              type="button"
+              class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600"
+              (click)="cancel(userForm)"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+            >
+              Save Changes
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    }
+          <!-- Details Modal -->
+          @if (selectedUser) {
+    <div
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+    >
+      <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-lg">
+        <h2 class="text-2xl font-bold mb-6 text-gray-800 text-center">
+          User Details
+        </h2>
+        <div class="mb-6 space-y-4">
+          <div class="flex justify-between items-center">
+            <span class="font-semibold text-gray-700">Email:</span>
+            <span class="text-gray-600">{{ selectedUser.email }}</span>
+          </div>
+          <div class="flex justify-between items-center">
+            <span class="font-semibold text-gray-700">Username:</span>
+            <span class="text-gray-600">{{ selectedUser.username }}</span>
+          </div>
+          <div class="flex justify-between items-center">
+            <span class="font-semibold text-gray-700">Password:</span>
+            <span class="text-gray-600">{{
+              selectedUser.password
+            }}</span>
+          </div>
+        </div>
+        <div class="flex justify-end">
+          <button
+            class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg transition-all shadow"
+            (click)="selectedUser = null"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+    }
+  </div>

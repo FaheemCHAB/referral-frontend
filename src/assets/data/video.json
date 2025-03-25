@@ -1,0 +1,32 @@
+[
+    {
+      "id": "1",
+      "url": "/assets/videos/video1.mp4",
+      "title": "പഠനവും ഒരുമിച്ച് ജോലി കിട്ടിയതും ഒരുമിച്ച് - Two incredible cousins at Aitrich Academy",
+      "thumbnail": "/assets/thumbnails/thumb1.jpg"
+    },
+    {
+      "id": "2",
+      "url": "/assets/videos/video2.mp4",
+      "title": "From a student to a successful Flutter developer! Muneer's inspiring journey",
+      "thumbnail": "/assets/thumbnails/thumb2.jpeg"
+    },
+    {
+      "id": "3",
+      "url": "/assets/videos/video3.mp4",
+      "title": "Congratulations to Harikrishna on starting his career as a Flutter Developer!",
+      "thumbnail": "/assets/thumbnails/thumb3.jpeg"
+    },
+    {
+      "id": "4",
+      "url": "/assets/videos/video4.mp4",
+      "title": "7 വർഷത്തെ CAREER GAP നു ശേഷം Developer ആയി Bincy",
+      "thumbnail": "/assets/thumbnails/thumb4.jpg"
+    },
+    {
+      "id": "5",
+      "url": "/assets/videos/video5.mp4",
+      "title": "4 വർഷത്തെ കരിയർ gap നു ശേഷം ASP.NET Developer ആയി Alma",
+      "thumbnail": "/assets/thumbnails/thumb5.jpeg"
+    }
+  ] 

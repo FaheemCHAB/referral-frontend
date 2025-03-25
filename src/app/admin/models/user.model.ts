@@ -5,7 +5,14 @@ export interface User {
   mobile: string;
   username: string;
   password: string;
-  status: boolean;
   isActive: boolean;
   createdAt: Date;
+  statusCounts: {
+    totalLeads: number;
+    attended: number;
+    notAttended: number;
+    registered: number;
+    joined: number;
+  };
+  referralCount?: number; // Add this line
 }
