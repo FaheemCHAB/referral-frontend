@@ -7,7 +7,7 @@
     "clean": "rm -rf .angular/cache && rm -rf dist",
     "dev": "ng serve",
     "build": "ng build --configuration production --base-href=/ --output-path=dist/demo/browser",
-    "postbuild": "cp src/assets/static.json dist/demo/browser/static.json && cp src/assets/static.json dist/demo/browser/assets/static.json"
+    "postbuild": "mkdir -p dist/demo/browser/assets && cp src/assets/static.json dist/demo/browser/static.json && cp src/assets/static.json dist/demo/browser/assets/static.json"
   },
   "dependencies": {
     "@angular/animations": "^18.1.0",
