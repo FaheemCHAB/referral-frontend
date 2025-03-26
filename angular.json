@@ -46,16 +46,12 @@
           },
           "options": {
             "assets": [
-            
               "src/favicon.ico",
               "src/assets",
-              "src/_redirects",
-              
-              
               {
                 "glob": "static.json",
                 "input": "src/assets",
-                "output": "/"  
+                "output": "/"
               }
             ],
             "index": "src/index.html",

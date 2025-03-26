@@ -1,5 +1,7 @@
 {
-    "routes": {
-      "/*": "/index.html"
-    }
+  "routes": {
+    "/user/*": "/index.html",
+    "/assets/*": "/assets/*",
+    "/*": "/index.html"
   }
+}
