@@ -8,9 +8,9 @@ import { LeaderboardComponent } from './components/leaderboard/leaderboard.compo
 const routes: Routes = [
   { path: '', children: [  // <-- Empty path for feature module's root
     { path: 'dashboard', component: DashboardComponent },
-    { path: 'refer', component: ReferralFormComponent },
     { path: 'referrals/:userId', component: ReferralsComponent },
-    { path: 'leaderboard/:userId', component: LeaderboardComponent }
+    { path: 'leaderboard/:userId', component: LeaderboardComponent },
+    { path: 'refer', component: ReferralFormComponent },
   ]}
 
 ];
