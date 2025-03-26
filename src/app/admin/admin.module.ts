@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 
 import { AdminRoutingModule } from './admin-routing.module';
 import { RouterModule } from '@angular/router';
-import { LoginComponent } from './components/login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ReferralsComponent } from './components/referrals/referrals.component';
 import { UsersComponent } from './components/users/users.component';
@@ -13,7 +12,6 @@ import { RewardsComponent } from './components/rewards/rewards.component';
 
 @NgModule({
   declarations: [
-    LoginComponent,
     ReferralsComponent,
     UsersComponent,
     AdminDashboardComponent,
