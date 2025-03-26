@@ -46,7 +46,7 @@
             }
           },
           "options": {
-            "assets": ["src/favicon.icon", "src/assets"],
+            "assets": ["src/favicon.icon", "src/assets","static.json"],
             "index": "src/index.html",
             "browser": "src/main.ts",
             "outputPath": "dist/demo",
