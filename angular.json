@@ -46,12 +46,7 @@
             }
           },
           "options": {
-            "assets": ["src/favicon.icon", "src/assets",
-            {
-              "glob": "static.json",
-              "input": "src/assets",
-              "output": "/"
-            }],
+            "assets": ["src/favicon.icon", "src/assets", "static.json"],
             "index": "src/index.html",
             "browser": "src/main.ts",
             "outputPath": "dist/demo",
