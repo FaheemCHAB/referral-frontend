@@ -29,7 +29,6 @@
               "sourceMap": false,
               "namedChunks": false,
               "outputHashing": "all",
-
               "budgets": [
                 {
                   "type": "initial",
@@ -46,7 +45,18 @@
             }
           },
           "options": {
-            "assets": ["src/favicon.icon", "src/assets", "static.json"],
+            "assets": [
+            
+              "src/favicon.ico",
+              "src/assets",
+              
+              
+              {
+                "glob": "static.json",
+                "input": "src/assets",
+                "output": "/"  
+              }
+            ],
             "index": "src/index.html",
             "browser": "src/main.ts",
             "outputPath": "dist/demo",
