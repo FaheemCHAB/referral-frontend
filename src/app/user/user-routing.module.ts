@@ -6,12 +6,12 @@ import { ReferralsComponent } from './components/referrals/referrals.component';
 import { LeaderboardComponent } from './components/leaderboard/leaderboard.component';
 
 const routes: Routes = [
-  // { path: '', redirectTo: '/login', pathMatch: 'full' },
-  // { path: 'login', component: LoginComponent },
-  { path: 'dashboard', component: DashboardComponent },
-  { path: 'refer', component: ReferralFormComponent },  // Dynamic path for referral form
-  { path: 'referrals/:userId', component: ReferralsComponent },
-  {path: "leaderboard/:userId", component: LeaderboardComponent}
+  { path: '', children: [  // <-- Empty path for feature module's root
+    { path: 'dashboard', component: DashboardComponent },
+    { path: 'refer', component: ReferralFormComponent },
+    { path: 'referrals/:userId', component: ReferralsComponent },
+    { path: 'leaderboard/:userId', component: LeaderboardComponent }
+  ]}
 
 ];
 
