@@ -25,10 +25,11 @@
             "production": {
               "aot": true,
               "extractLicenses": true,
-              "namedChunks": false,
               "optimization": true,
-              "outputHashing": "all",
               "sourceMap": false,
+              "namedChunks": false,
+              "outputHashing": "all",
+
               "budgets": [
                 {
                   "type": "initial",
@@ -50,10 +51,7 @@
             "browser": "src/main.ts",
             "outputPath": "dist/demo",
             "polyfills": ["zone.js"],
-            "styles": [
-              "src/custom-theme.scss",
-              "src/styles.css"
-            ],
+            "styles": ["src/custom-theme.scss", "src/styles.css"],
             "tsConfig": "tsconfig.app.json",
             "allowedCommonJsDependencies": ["google-libphonenumber"]
           }

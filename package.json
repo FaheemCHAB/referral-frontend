@@ -5,7 +5,8 @@
     "ng": "ng",
     "start": "serve dist/demo",
     "build": "ng build --configuration production",
-    "clean": "rm -rf .angular/cache && rm -rf dist"
+    "clean": "rm -rf .angular/cache && rm -rf dist",
+    "dev": "ng serve"
   },
   "dependencies": {
     "@angular/animations": "^18.1.0",
