@@ -3,8 +3,8 @@
   "private": true,
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "start": "serve dist/demo",
+    "build": "ng build --configuration production",
     "clean": "rm -rf .angular/cache && rm -rf dist"
   },
   "dependencies": {
