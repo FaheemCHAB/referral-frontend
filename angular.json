@@ -49,11 +49,6 @@
               "src/favicon.ico",
               "src/assets",
               {
-                "glob": "static.json",
-                "input": "src/assets",
-                "output": "/"
-              },
-              {
                 "glob": "_redirects",
                 "input": "src/assets",
                 "output": "/"
