@@ -52,11 +52,16 @@
                 "glob": "static.json",
                 "input": "src/assets",
                 "output": "/"
+              },
+              {
+                "glob": "_redirects",
+                "input": "src/assets",
+                "output": "/"
               }
             ],
             "index": "src/index.html",
             "browser": "src/main.ts",
-            "outputPath": "dist/demo",
+            "outputPath": "dist/demo/browser",
             "polyfills": ["zone.js"],
             "styles": ["src/custom-theme.scss", "src/styles.css"],
             "tsConfig": "tsconfig.app.json",
