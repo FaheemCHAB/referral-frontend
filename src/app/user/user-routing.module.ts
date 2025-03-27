@@ -6,12 +6,20 @@ import { ReferralsComponent } from './components/referrals/referrals.component';
 import { LeaderboardComponent } from './components/leaderboard/leaderboard.component';
 
 const routes: Routes = [
-  { path: '', children: [  // <-- Empty path for feature module's root
-    { path: 'dashboard', component: DashboardComponent },
-    { path: 'referrals/:userId', component: ReferralsComponent },
-    { path: 'leaderboard/:userId', component: LeaderboardComponent },
-    { path: 'refer', component: ReferralFormComponent },
-  ]}
+  { 
+    path: '', 
+    children: [
+      { path: 'dashboard', component: DashboardComponent },
+      { path: 'referrals/:userId', component: ReferralsComponent },
+      { path: 'leaderboard/:userId', component: LeaderboardComponent },
+      { 
+        path: 'refer', 
+        component: ReferralFormComponent,
+        data: { shouldReuse: true }  // Add route reuse strategy
+      },
+      { path: '**', redirectTo: 'dashboard' }
+    ]
+  }
 
 ];
 

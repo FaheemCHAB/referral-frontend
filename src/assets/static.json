@@ -1,5 +1,13 @@
 {
   "routes": {
-    "/**": "index.html"
+    "/*": {
+      "headers": {
+        "Cache-Control": "no-cache, no-store, must-revalidate"
+      }
+    },
+    "/user/*": "/index.html",
+    "/refer": "/index.html",
+    "/assets/*": "/assets/*",
+    "/*": "/index.html"
   }
 }

@@ -88,7 +88,7 @@ export class DashboardComponent implements OnInit {
   generateLink() {
     const user = this.currentUser$.getValue(); // Get the current user value
     if (user) {
-      this.generatedLink = `${this.FRONTEND_URL}/refer?ref=${user._id}`;
+      this.generatedLink = `${this.FRONTEND_URL}/#/user/refer?ref=${user._id}`;
     }
   }
 

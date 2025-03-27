@@ -6,8 +6,8 @@
     "start": "serve dist/demo/browser",
     "clean": "rm -rf .angular/cache && rm -rf dist",
     "dev": "ng serve",
-    "build": "ng build --configuration production --base-href=/ --output-path=dist/demo/browser",
-    "postbuild": "mkdir -p dist/demo/browser && cp src/assets/static.json dist/demo/browser/static.json && cp src/assets/_redirects dist/demo/browser/_redirects"
+    "build": "ng build --configuration production --base-href=/ --deploy-url=/ --output-path=dist/demo/browser",
+    "postbuild": "mkdir -p dist/demo/browser && cp src/assets/static.json dist/demo/browser/ && cp src/assets/_redirects dist/demo/browser/ && cp src/assets/static.json dist/demo/browser/assets/"
   },
   "dependencies": {
     "@angular/animations": "^18.1.0",
