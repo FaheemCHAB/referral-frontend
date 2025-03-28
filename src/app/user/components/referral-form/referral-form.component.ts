@@ -8,6 +8,7 @@ import {
   NgZone,
   ViewChildren,
   QueryList,
+  HostListener,
 } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule, NgForm } from "@angular/forms";
@@ -27,7 +28,10 @@ import {
   transition,
   trigger,
 } from "@angular/animations";
-import { InstagramVideosService, Video } from "../../services/instagram-videos.service";
+import {
+  InstagramVideosService,
+  Video,
+} from "../../services/instagram-videos.service";
 import { interval, Subscription } from "rxjs";
 
 declare const intlTelInput: any;
@@ -40,6 +44,7 @@ declare global {
 interface BootcampCard {
   mainHeading: string;
   secondary: string;
+  technology: string;
   content: string;
   logo: string;
   bgColor: string;
@@ -70,16 +75,30 @@ interface BootcampCard {
       transition("inactive => active", animate("300ms ease-out")),
       transition("active => inactive", animate("200ms ease-in")),
     ]),
+    trigger("cardAnimation", [
+      transition(":enter", [
+        style({
+          transform: "translateX(100%) rotate(5deg) scale(1.2)",
+          opacity: 0,
+        }),
+        animate(
+          "500ms cubic-bezier(0.4, 0, 0.2, 1)",
+          style({ transform: "translateX(0) rotate(0) scale(1)", opacity: 1 })
+        ),
+      ]),
+    ]),
   ],
 })
 export class ReferralFormComponent {
   @ViewChild("phoneInput") phoneInput!: ElementRef;
   @ViewChild("referralForm") referralForm!: NgForm;
+  @ViewChild('registrationForm') registrationForm!: ElementRef;
   separateDialCode = true;
   iti: any;
   currentIndex = 0;
   phoneValid = false;
   private autoRotationInterval: any;
+  currentHoverIndex: number | null = null;
   referral = {
     name: "",
     email: "",
@@ -173,63 +192,66 @@ export class ReferralFormComponent {
     },
   ];
 
-  instagramPosts = [
-    "https://www.instagram.com/p/DGFUOwESqyy/embed",
-    "https://www.instagram.com/p/DGScU_5SJ2x/embed",
-    "https://www.instagram.com/p/C4SHfkPSUQ3/embed",
-    "https://www.instagram.com/p/C9mwqUohhnX/embed",
-    "https://www.instagram.com/p/C_LEE4eyCyC/embed",
-    "https://www.instagram.com/p/C7l6XzFyxO0/embed",
+  students = [
+    { image: "../../../../assets/images/placement-1.jpg" },
+    { image: "../../../../assets/images/placement-2.jpg" },
+    { image: "../../../../assets/images/placement-3.jpg" },
+    { image: "../../../../assets/images/placement-4.jpg" },
+    { image: "../../../../assets/images/placement-5.jpg" },
+    { image: "../../../../assets/images/placement-6.jpg" },
+    { image: "../../../../assets/images/placement-7.jpg" },
+    { image: "../../../../assets/images/placement-8.jpg" },
+    { image: "../../../../assets/images/placement-9.jpg" },
+    { image: "../../../../assets/images/placement-10.jpg" },
   ];
 
-  bootcampCards: BootcampCard[] = [
+  bootcampCards: any = [
     {
-      mainHeading: "Tier-1 Software Engineer Bootcamp",
-      secondary: "Cloud-native ASP .Net Core Full-Stack",
-      content:
-        "An integrated, <strong>full-stack Developer Training Bootcamp</strong> designed to transform both beginners and experienced software developers into expert software engineers skilled and experienced in cutting-edge Microsoft Web Technologies, tools and frameworks.",
-      logo: "assets/images/download.png",
-      bgColor: "linear-gradient(135deg, #512bd4, #6a55f2)",
+      technology: "Full-Stack .NET Core",
+      stackType: "",
+      content: "An integrated, full-stack Developer Training Bootcamp designed to transform both beginners and experienced software developers into expert software engineers skilled and experienced in cutting-edge Microsoft Web Technologies, tools and frameworks.",
+      logo: "assets/images/dot.jpg",
+      bgColor: "linear-gradient(135deg, #512bd4 0%, #2b0b6e 100%)",
+      level: ""
     },
     {
-      mainHeading: "Tier-1 Software Engineer Bootcamp",
-      secondary: "Cloud Native MEAN Stack Developer",
-      content:
-        "<p>A cloud-focused, integrated <strong>full-stack Developer Training Bootcamp</strong> designed to transform both beginners and experienced software developers into expert Tier-1 Software Engineers specialized in the MEAN Stack (Full-Stack JavaScript) and AWS (Amazon Web Services) Cloud, DevOps tools and frameworks.</p>",
-      logo: "assets/images/mean.png",
-      bgColor: "linear-gradient(135deg, #68b12e, #8fd14f)",
+      technology: "Cloud Native MEAN Stack",
+      stackType: "",
+      content: "A cloud-focused, integrated full-stack Developer Training Bootcamp designed to transform both beginners and experienced software developers into expert Tier-1 Software Engineers specialized in the MEAN Stack (Full-Stack JavaScript) and AWS (Amazon Web Services) Cloud, DevOps tools and frameworks.",
+      logo: "assets/images/mean1.png",
+      bgColor: "linear-gradient(135deg, #68b12e 0%, #3a6119 100%)",
+      level: ""
     },
     {
-      mainHeading: "Tier-1 Software Engineer Bootcamp",
-      secondary: "Mobile Developer: Flutter",
-      content:
-        "<p>Flutter mobile developer course is designed to teach students how to build mobile applications using Flutter, a popular open-source mobile app development framework created by Google.</p>",
-      logo: "assets/images/flutter.png",
-      bgColor: "linear-gradient(135deg, #027DFD, #45D1FD)",
+      technology: "Mobile App Development using Flutter",
+      stackType: "",
+      content: "Flutter mobile developer course is designed to teach students how to build mobile applications using Flutter, a popular open-source mobile app development framework created by Google",
+      logo: "assets/images/flut.png",
+      bgColor: "linear-gradient(135deg, #027DFD 0%, #004a94 100%)",
     },
     {
-      mainHeading: "Tier-1 Software Engineer Bootcamp",
-      secondary: "Front-End Developer: Angular",
-      content:
-        "<p>Angular Developer course is designed to teach students how to build dynamic, single-page web applications using the Angular framework. Students will learn the fundamentals of Angular and will gain practical experience building and deploying Angular applications.</p>",
-      logo: "assets/images/angular.png",
-      bgColor: "linear-gradient(135deg, #dd0031, #c3002f)",
+      technology: "Java Web Development with Spring Boot",
+      stackType: "",
+      duration: "",
+      content: "The Java Web Developer Training Program is designed for individuals who want to build a career in web development using Java. With a combination of in-person classes and hands-on projects, you will gain the knowledge and skills necessary to build robust and scalable web applications using Java",
+      logo: "assets/images/java2.jpg",
+      bgColor: "linear-gradient(135deg, #027DFD 0%, #004a94 100%)",
     },
     {
-      mainHeading: "Tier-1 Software Engineer Bootcamp",
-      secondary: "Web Developer Program: Java",
-      content:
-        "<p>The Java Web Developer Training Program is designed for individuals who want to build a career in web development using Java. With a combination of in-person classes and hands-on projects, you will gain the knowledge and skills necessary to build robust and scalable web applications using Java</p>",
-      logo: "assets/images/java.png",
-      bgColor: "linear-gradient(135deg, #573f6d, #240a43)",
+      technology: "Fontend Development Using Angular",
+      stackType: "",
+      duration: "",
+      content: "Angular Developer course is designed to teach students how to build dynamic, single-page web applications using the Angular framework. Students will learn the fundamentals of Angular and will gain practical experience building and deploying Angular applications.",
+      logo: "assets/images/ang.png",
+      bgColor: "linear-gradient(135deg, #027DFD 0%, #004a94 100%)",
     },
     {
-      mainHeading: "Tier-1 Software Engineer Bootcamp",
-      secondary: "Web Developer Program: .NET",
-      content:
-        "<p>.NET is a software framework developed by Microsoft that includes a large library of pre-built code and a virtual machine that provides a platform for running and executing applications written in various programming languages.</p>",
-      logo: "assets/images/download.png",
-      bgColor: "linear-gradient(135deg, #573f6d, #8535e7)",
+      technology: "Web Developer Program: .NET",
+      stackType: "",
+      duration: "",
+      content: ".NET is a software framework developed by Microsoft that includes a large library of pre-built code and a virtual machine that provides a platform for running and executing applications written in various programming languages.",
+      logo: "assets/images/dot.jpg",
+      bgColor: "linear-gradient(135deg, #027DFD 0%, #004a94 100%)",
     },
   ];
   scriptLoaded = false;
@@ -237,10 +259,10 @@ export class ReferralFormComponent {
   selectedVideoId: string = this.videos[0].id; // Default video
   showRemarksField = false;
   safeUrl!: SafeResourceUrl;
-  @ViewChild('scrollContainer') scrollContainer!: ElementRef;
+  @ViewChild("scrollContainer") scrollContainer!: ElementRef;
   originalVideos: Video[] = [];
   duplicatedVideos: Video[] = [];
-   animationPaused = false;
+  animationPaused = false;
   constructor(
     private referralService: ReferralService,
     private router: Router,
@@ -267,7 +289,6 @@ export class ReferralFormComponent {
     document.body.appendChild(script);
 
     this.loadVideos();
-    
   }
 
   ngAfterViewInit() {
@@ -282,9 +303,14 @@ export class ReferralFormComponent {
     this.stopAutoRotation();
   }
 
-  selectCard(index: number): void {
+  selectCard(index: number) {
     this.currentIndex = index;
-    this.resetAutoRotation();
+    
+    // Scroll to the registration form
+    this.registrationForm.nativeElement.scrollIntoView({ 
+      behavior: 'smooth', 
+      block: 'start' 
+    });
   }
 
   hoverCard(index: number): void {
@@ -520,10 +546,9 @@ export class ReferralFormComponent {
         this.originalVideos = videos;
         this.duplicatedVideos = [...videos, ...videos]; // Duplicate for seamless loop
       },
-      (error) => console.error('Error loading videos:', error)
+      (error) => console.error("Error loading videos:", error)
     );
   }
-
 
   pauseAutoSlide(): void {
     this.animationPaused = true;
@@ -533,4 +558,26 @@ export class ReferralFormComponent {
     this.animationPaused = false;
   }
 
+  onHover(index: number) {
+    this.currentHoverIndex = index;
+  }
+
+  onLeave() {
+    this.currentHoverIndex = null;
+  }
+
+
+
+  @HostListener("mousemove", ["$event"])
+  onMouseMove(event: MouseEvent) {
+    if (this.currentHoverIndex !== null) {
+      const cards = document.querySelectorAll(".hover-effect");
+      cards.forEach((card, index) => {
+        const speed = (index - this.currentHoverIndex!) * 2;
+        const x = (event.clientX * speed) / 1000;
+        const y = (event.clientY * speed) / 1000;
+        (card as HTMLElement).style.transform = `translate(${x}px, ${y}px)`;
+      });
+    }
+  }
 }

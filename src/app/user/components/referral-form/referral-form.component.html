@@ -1,4 +1,4 @@
-<nav class="flex items-center justify-between px-6 py-4">
+<nav class="flex items-center justify-between px-6 py-4" #registrationForm>
   <!-- Logo -->
   <a
     href="https://aitrichacademy.com/"
@@ -20,7 +20,8 @@
 
   <a
     href="https://aitrichacademy.com/"
-    class="glow-effect bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold py-3 px-6 rounded-lg hover:from-blue-700 hover:to-blue-800 transform hover:-translate-y-0.5 transition-all duration-300 shadow-lg"
+    target="_blank"
+    class="glow-effect bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold py-3 px-6 rounded-lg hover:from-blue-700 hover:to-blue-800 transform hover:-translate-y-0.5 cursor-pointer transition-all duration-300 shadow-lg"
   >
     About Aitrich
   </a>
@@ -129,7 +130,7 @@
               <span class="text-blue-700 font-bold">Aitrich</span>?
             </h2>
 
-            <form (ngSubmit)="onSubmit()" #referralForm="ngForm" class="space-y-6">
+            <form (ngSubmit)="onSubmit()" #referralForm="ngForm" class="space-y-6" >
               <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <!-- Name Field -->
                 <div>
@@ -187,7 +188,7 @@
                     #phoneInput
                     type="tel"
                     id="phone"
-                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm"
+                    class="w-[255px] px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm"
                     name="mobile"
                     [(ngModel)]="referral.mobile"
                     #mobile="ngModel"
@@ -604,7 +605,7 @@
   alt=""
   class="bg-blue-900 h-100"
 />
-<h2 class="text-4xl font-bold text-center text-gray-800 mb-10 mt-10">Success Stories <span class="bg-gradient-to-r from-blue-500 to-indigo-600 bg-clip-text text-transparent">from Aitrich</span></h2>
+<h2 class="text-4xl font-bold text-center text-gray-800 mb-10 mt-10">Voice of Success <span class="bg-gradient-to-r from-blue-500 to-indigo-600 bg-clip-text text-transparent">from Aitrich</span></h2>
 <!-- <div class="w-full max-w-3xl mx-auto rounded-lg overflow-hidden shadow-xl p-4"> -->
 
   <div class="scroll-container"
@@ -631,61 +632,92 @@
  <!-- Bootcamp Carousel -->
  <div class="w-full bg-gray-50 py-16">
   <div class="max-w-7xl mx-auto px-4">
-    <h2 class="text-5xl font-bold text-center text-gray-800 mb-4">Our Bootcamp Programs</h2>
-    <p class="text-center text-gray-600 mb-12 max-w-3xl mx-auto text-xl">Transform your career with our industry-leading bootcamp programs designed to equip you with cutting-edge skills in software development.</p>
-    
+    <!-- Section Header -->
+    <div class="text-center mb-12">
+      <h2 class="text-5xl font-bold text-gray-800 mb-4 tracking-tight">
+        Our Bootcamp Programs
+      </h2>
+      <p class="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+        Transform your career with our industry-leading bootcamp programs designed to equip you with cutting-edge skills in software development.
+      </p>
+    </div>
+
     <!-- Cards Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 hover:cursor-pointer">
-      <div *ngFor="let card of bootcampCards; let i = index" 
-           class="bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 border border-transparent"
-           [class.shadow-xl]="i === currentIndex"
-           [class.border-indigo-500]="i === currentIndex"
-           [class.scale-105]="i === currentIndex"
-           (mouseenter)="hoverCard(i)"
-           (mouseleave)="resetAutoRotation()">
-        
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div 
+        *ngFor="let card of bootcampCards; let i = index" 
+        class="bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl group relative"
+        [class.border-2]="i === currentIndex"
+        [class.border-indigo-500]="i === currentIndex"
+      >
         <!-- Card Header with Logo -->
-        <div class="p-6" [style.background]="card.bgColor">
-          <div class="flex items-center">
-            <div class="bg-white rounded-full p-2 mr-4 shadow-md">
-              <img [src]="card.logo" [alt]="card.secondary + ' Logo'" class="h-10 w-10 object-contain">
-            </div>
-            <div class="flex-grow">
-              <h3 class="text-lg font-bold text-white leading-tight">{{ card.secondary }}</h3>
-            </div>
+        <div class="p-6 relative">
+          <div class="absolute inset-0"></div>
+          <div class="flex items-center relative z-10">
+            <img 
+              [src]="card.logo" 
+              [alt]="card.technology + ' Logo'" 
+              class="w-full h-48 object-cover"
+            >
           </div>
         </div>
         
+        <div class="flex-grow px-6 pb-4">
+          <h3 class="text-xl font-bold text-black leading-tight">
+            {{ card.technology }}
+          </h3>
+          <p class="text-black font-medium mt-1">
+            {{ card.stackType }}
+          </p>
+        </div>
+
         <!-- Card Content -->
         <div class="p-6">
-          <h4 class="text-xl font-semibold mb-3 text-gray-800">{{ card.mainHeading }}</h4>
-          <div class="prose text-gray-600 mb-6 min-h-[100px]" [innerHTML]="card.content"></div>
-          
-          <div class="flex justify-between items-center">
-            <button class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2 rounded-md font-medium transition-colors duration-300 flex items-center justify-center"
-                    [class.bg-indigo-700]="i === currentIndex"
-                    (click)="selectCard(i)">
-              <span>Learn More</span>
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+          <div class="prose text-gray-600 mb-6 min-h-[120px]">
+            <h4 class="text-gray-800 font-semibold mb-3">
+              {{ card.duration }} 
+            </h4>
+            <p [innerHTML]="card.content"></p>
+          </div>
+
+          <div class="flex justify-between items-center border-t pt-4">
+            <div class="text-sm font-medium text-indigo-600">
+              {{ card.level }} 
+            </div>
+            <button 
+              class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-lg font-medium transition-colors duration-300 flex items-center gap-2 group"
+              (click)="selectCard(i)"
+            >
+              <span>Explore</span>
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                class="h-5 w-5 transition-transform group-hover:translate-x-1" 
+                viewBox="0 0 20 20" 
+                fill="currentColor"
+              >
+                <path 
+                  fill-rule="evenodd" 
+                  d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" 
+                  clip-rule="evenodd" 
+                />
               </svg>
             </button>
-            
           </div>
         </div>
       </div>
     </div>
-    
+
     <!-- Navigation Dots -->
     <div class="flex justify-center mt-12 space-x-2">
       <button 
         *ngFor="let card of bootcampCards; let i = index" 
         (click)="selectCard(i)"
-        class="h-3 rounded-full transition-all duration-300"
-        [class.bg-indigo-600]="i === currentIndexes"
-        [class.bg-gray-300]="i !== currentIndexes"
-        [class.w-8]="i === currentIndexes"
-        [class.w-3]="i !== currentIndexes"></button>
+        class="h-2 rounded-full transition-all duration-300"
+        [class.bg-indigo-600]="i === currentIndex"
+        [class.bg-gray-300]="i !== currentIndex"
+        [class.w-8]="i === currentIndex"
+        [class.w-4]="i !== currentIndex"
+      ></button>
     </div>
   </div>
 </div>
@@ -697,36 +729,41 @@
     <span class="highlight-career text-indigo-600 font-bold">career</span>
     with us
   </h2>
-  <div class="mt-7 grid grid-cols-1 md:grid-cols-3 gap-6">
-    <div *ngFor="let post of instagramPosts" class="flex justify-center">
-      <iframe
-        class="w-full max-w-[320px] h-[400px] border-none rounded-lg shadow-lg"
-        [src]="post | safeUrl"
-        allowfullscreen
-      >
-      </iframe>
+
+  <div class="relative min-h-screen p-8 ">
+    <div class="flex flex-wrap justify-center gap-4">
+      <!-- Repeat for each card -->
+      <div 
+        *ngFor="let student of students; let i = index"
+        class="relative transition-all duration-300 ease-out transform hover:z-50"
+        [style.transform]="'translateY(' + (i * -8) + 'px)'"
+        [style.zIndex]="i"
+        (mouseenter)="onHover(i)"
+        (mouseleave)="onLeave()">
+        <div class="group relative cursor-pointer">
+          <div class="border-4 border-white rounded-xl overflow-hidden shadow-2xl 
+                     transform transition-all duration-300 ease-[cubic-bezier(0.4,2,0.6,0.5)]
+                     hover:scale-110 hover:shadow-3xl origin-top">
+            <img 
+              [src]="student.image" 
+              class="w-64 h-80 object-cover transform transition-transform duration-300"
+            />
+            <!-- <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent">
+              <p class="absolute bottom-4 left-4 text-white font-bold text-xl">{{ student.name }}</p>
+            </div> -->
+          </div>
+        </div>
+      </div>
     </div>
   </div>
+
 </div>
 <div class="relative mx-auto max-w-4xl mt-10">
   <img
-    src="../../../../assets/images/banner-full-placement.jpeg"
+    src="../../../../assets/images/website Banner Design (4).jpg"
     alt="Placement Banner"
     class="w-full h-auto"
   />
-
-  <!-- Text Content Before the Clickable Element -->
-  <div
-    class="absolute bottom-20 left-4 bg-black bg-opacity-70 text-white p-4 rounded-lg"
-  >
-    <p class="text-lg font-bold mb-2">
-      🎯 Want to see how our Bootcamp has transformed careers?
-    </p>
-    <p class="text-lg font-bold mb-2">
-      💬 Hear from alumni who’ve successfully achieved their goals with our
-      training programs.
-    </p>
-  </div>
 
   <!-- Clickable Element with Speaker Icon -->
   <a

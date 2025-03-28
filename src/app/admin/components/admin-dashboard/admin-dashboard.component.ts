@@ -43,7 +43,8 @@ export class AdminDashboardComponent {
   
 
   get attendedPercentage(): number {
-    return Math.round((this.attended / (this.attended + this.unattended)) * 100);
+    const total = this.attended + this.unattended;
+    return total > 0 ? Math.round((this.attended / total) * 100) : 0;
   }
 
 

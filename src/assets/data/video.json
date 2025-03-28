@@ -1,7 +1,7 @@
 [
     {
       "id": "1",
-      "url": "/assets/videos/video1.mp4",
+      "url": "/assets/videos/video4.mp4",
       "title": "പഠനവും ഒരുമിച്ച് ജോലി കിട്ടിയതും ഒരുമിച്ച് - Two incredible cousins at Aitrich Academy",
       "thumbnail": "/assets/thumbnails/thumb1.jpg"
     },
@@ -19,13 +19,13 @@
     },
     {
       "id": "4",
-      "url": "/assets/videos/video4.mp4",
+      "url": "/assets/videos/video5.mp4",
       "title": "7 വർഷത്തെ CAREER GAP നു ശേഷം Developer ആയി Bincy",
       "thumbnail": "/assets/thumbnails/thumb4.jpg"
     },
     {
       "id": "5",
-      "url": "/assets/videos/video5.mp4",
+      "url": "/assets/videos/video1.mp4",
       "title": "4 വർഷത്തെ കരിയർ gap നു ശേഷം ASP.NET Developer ആയി Alma",
       "thumbnail": "/assets/thumbnails/thumb5.jpeg"
     }
