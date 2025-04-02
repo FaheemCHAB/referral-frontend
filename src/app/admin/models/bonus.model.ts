@@ -6,6 +6,7 @@ export interface BonusHistory {
     bonusPoints: number;
     status: string;
     date: Date;
+    editing?: boolean;
     amount: number;
 }
 

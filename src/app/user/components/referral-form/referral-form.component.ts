@@ -246,7 +246,7 @@ export class ReferralFormComponent {
       bgColor: "linear-gradient(135deg, #027DFD 0%, #004a94 100%)",
     },
     {
-      technology: "Web Developer Program: .NET",
+      technology: "Web Developer Program: .NET Core",
       stackType: "",
       duration: "",
       content: ".NET is a software framework developed by Microsoft that includes a large library of pre-built code and a virtual machine that provides a platform for running and executing applications written in various programming languages.",

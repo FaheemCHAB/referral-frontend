@@ -24,11 +24,6 @@
     </div>
   </div>
   
-  <!-- Mobile Admin Indicator (visible only on small screens) -->
-  <div class="md:hidden flex justify-center my-3">
-    <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full font-medium text-sm">Admin Portal</span>
-  </div>
-
   <!-- Metrics Dashboard -->
   <div class="p-6">
     <div class="mb-8">
@@ -168,18 +163,10 @@
       
       <div class="card cursor-pointer bg-gradient-to-r from-purple-500 to-purple-700 p-6 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300 transform hover:-translate-y-1" routerLink="/admin/referrals">
         <div class="flex justify-center mb-4">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-40 h-40 text-white" viewBox="0 0 24 24" fill="currentColor">
-            <!-- Main person -->
-            <path d="M12 2a3 3 0 1 0 3 3 3 3 0 0 0-3-3Zm0 4a1 1 0 1 1 1-1 1 1 0 0 1-1 1Z"/>
-            <path d="M12 7a5 5 0 0 0-5 5v1h1v-1a4 4 0 0 1 8 0v1h1v-1a5 5 0 0 0-5-5Z"/>
-            <!-- Network connections -->
-            <path d="M20.92 19.62a1 1 0 0 0-.21-.33l-2-2a1 1 0 0 0-1.42 1.42l.8.79H16a1 1 0 0 0 0 2h2.09l-.8.79a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l2-2a1 1 0 0 0 .21-1.09Z"/>
-            <path d="M4.71 14.79a1 1 0 0 0-1.42 0l-2 2a1 1 0 0 0-.21.33 1 1 0 0 0 .21 1.09l2 2a1 1 0 0 0 1.42 0 1 1 0 0 0 0-1.42l-.8-.79H8a1 1 0 0 0 0-2H5.91l.8-.79a1 1 0 0 0 0-1.42Z"/>
-            <!-- Shared connection circle -->
-            <circle cx="12" cy="16" r="1" fill="currentColor"/>
-            <circle cx="15" cy="18" r="1" fill="currentColor"/>
-            <circle cx="9" cy="18" r="1" fill="currentColor"/>
+          <svg class=" text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="165" fill="none" viewBox="0 0 24 24">
+            <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M4.5 17H4a1 1 0 0 1-1-1 3 3 0 0 1 3-3h1m0-3.05A2.5 2.5 0 1 1 9 5.5M19.5 17h.5a1 1 0 0 0 1-1 3 3 0 0 0-3-3h-1m0-3.05a2.5 2.5 0 1 0-2-4.45m.5 13.5h-7a1 1 0 0 1-1-1 3 3 0 0 1 3-3h3a3 3 0 0 1 3 3 1 1 0 0 1-1 1Zm-1-9.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z"/>
           </svg>
+          
         </div>
         <h2 class="text-xl font-semibold text-white mb-2 text-center">View Referrals</h2>
       </div>

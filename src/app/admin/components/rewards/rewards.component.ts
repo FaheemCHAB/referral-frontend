@@ -62,14 +62,14 @@ export class RewardsComponent {
   selectedBonusHistory: Bonus | null = null;
   bonusRewards: Bonus[] = [];
   startDate: string | null = null;
-endDate: string | null = null;
-historyStatusFilter: string = "";
-filteredBonusHistory: any[] = [];
-selectedUserBonus: User | null = null;
-filteredRewardHistory: RewardHistory[] = [];
-bonusInputError = false;
-loadingEntry: string | null = null;
-// conversionRate: number = 0.5;
+  endDate: string | null = null;
+  historyStatusFilter: string = "";
+  filteredBonusHistory: any[] = [];
+  selectedUserBonus: User | null = null;
+  filteredRewardHistory: RewardHistory[] = [];
+  bonusInputError = false;
+  loadingEntry: string | null = null;
+// conversionRate: number = 0.5;  
 
   constructor(
     private userService: UserService,
@@ -343,13 +343,41 @@ cancelEditing(entry: any): void {
   entry.editing = false;
 }
 
-// Calculate the amount based on bonus points
-// updateEditAmount(entry: any): void {
-//   // Calculate amount based on bonus points (adjust formula as needed)
-//   entry.editAmount = entry.editBonusPoints * this.conversionRate;
-// }
+saveEditingRewardHistory(entry: RewardHistory): void {
+  this.loadingEntry = entry._id;
 
-// Save the edits to the database
+  // Capture the most recent values directly from the DOM
+  const amountInput = document.querySelector(`input[data-amount-id="${entry._id}"]`) as HTMLInputElement;
+  const remarksInput = document.querySelector(`input[data-remarks-id="${entry._id}"]`) as HTMLInputElement;
+
+  // Use DOM values if available, otherwise fallback to model values
+  const editedAmount = amountInput ? parseFloat(amountInput.value) : entry.amount;
+  const editedRemarks = remarksInput ? remarksInput.value : entry.remarks || '';
+
+  const updatedData = {
+    data: {
+      amount: editedAmount,
+      remarks: editedRemarks
+    }    
+  };
+
+  console.log('Saving - payload:', updatedData);
+  console.log('Saving - editedAmount:', );    
+  console.log('Saving - editedRemarks:', editedRemarks);
+
+  this.rewardService.updateRewardByRewardId(entry._id, updatedData).subscribe(
+    (response: RewardHistory) => {
+      console.log('Reward updated successfully:', response);
+   
+      this.loadingEntry = null;
+    },
+    (error) => {
+      console.error('Error saving reward:', error);
+      this.loadingEntry = null;
+    }
+    
+  )
+}
 
   saveEditing(entry: BonusHistory): void {
     this.loadingEntry = entry._id;
@@ -375,18 +403,27 @@ cancelEditing(entry: any): void {
 
     this.bonusService.updateBonusByUserId(entry._id, updatedData).subscribe(
       (response: BonusHistory) => {
-        // Update the local entry with values from the response
+        console.log('API Response:', response);
+        
+        if (!response) {
+          console.error('Server returned null response - record not found');
+          this.loadingEntry = null;
+          // Maybe show an error message to the user
+          return;
+        }
+        
+        // Rest of your success handler
         entry.bonusPoints = response.bonusPoints;
         entry.amount = response.amount;
         entry.remarks = response.remarks;
-        // entry.editing = false;
-
+        entry.editing = false;
+        
         // Update totals in the parent Bonus object
         if (this.selectedBonusHistory) {
           this.selectedBonusHistory.bonusPoints = this.calculateTotalBonusPoints();
           this.selectedBonusHistory.amount = this.calculateTotalAmount();
         }
-
+    
         this.loadingEntry = null;
       },
       (error) => {
@@ -744,6 +781,20 @@ calculateTotalAmount(): number {
       this.bonusPoints = parseInt(input);
     }
   }
+
+  sidenavOpen = false; // Controls visibility of sidenav on mobile
+
+// Toggle sidenav visibility
+toggleSidenav() {
+  this.sidenavOpen = !this.sidenavOpen;
+}
+
+// Close sidenav after navigation on mobile
+onMobileNavClick() {
+  if (window.innerWidth < 768) { // Only close if on mobile viewport
+    this.sidenavOpen = false;
+  }
+}
 
   logout() {
     this.router.navigate(["/auth/login"]);

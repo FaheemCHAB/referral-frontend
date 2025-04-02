@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment.development';
 import { HttpClient } from '@angular/common/http';
-import { Reward } from '../models/rewards.model';
+import { Reward, RewardHistory } from '../models/rewards.model';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -34,5 +34,9 @@ export class RewardsService {
 
   updateRewardStatus(userId: string, newStatus: string) {
     return this.http.patch<Reward>(`${this.API_URL}/reward/change-status/${userId}`, { status: newStatus });
+  }
+
+  updateRewardByRewardId(rewardId: string, reward: any) {
+    return this.http.put<RewardHistory>(`${this.API_URL}/reward/${rewardId}`, reward);
   }
 }

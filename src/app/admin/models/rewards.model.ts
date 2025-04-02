@@ -1,12 +1,15 @@
 import { User } from "./user.model";
 
 export interface RewardHistory {
+editedAmount: any;
+
   _id: string;
   amount: number;
   bonusPoints: number;
   date: Date;
   status: string;
   remarks: string;
+  editing?: boolean;
 }
 
 export interface Reward {
