@@ -580,4 +580,19 @@ export class ReferralFormComponent {
       });
     }
   }
+
+  scrollToRegistration(event: Event): void {
+    event.preventDefault(); // Prevent default anchor behavior
+    
+    // Find the registration form element
+    const registrationForm = document.querySelector('#registrationForm');
+    
+    // If found, scroll to it
+    if (registrationForm) {
+      registrationForm.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  }
 }

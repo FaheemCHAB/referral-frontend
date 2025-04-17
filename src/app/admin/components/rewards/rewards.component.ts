@@ -7,6 +7,8 @@ import { RewardsService } from "../../services/rewards.service";
 import { Router } from "@angular/router";
 import { BonusService } from "../../services/bonus.service";
 import { Bonus, BonusHistory } from "../../models/bonus.model";
+import { ReferralService } from "../../services/referral.service";
+import { Referral } from "../../models/referral.model";
 
 @Component({
   selector: "app-rewards",
@@ -70,11 +72,20 @@ export class RewardsComponent {
   bonusInputError = false;
   loadingEntry: string | null = null;
 // conversionRate: number = 0.5;  
+joinedReferrals: Referral[] = [];
+selectedReferral: Referral | null = null;
+showStatusConfirm = false;
+pendingStatusChange: {
+  rewardId: string;
+  newStatus: "pending" | "processing" | "paid";
+  selectElement: HTMLSelectElement;
+} | null = null;
 
   constructor(
     private userService: UserService,
     private rewardService: RewardsService,
     private bonusService: BonusService,
+    private referralService: ReferralService,
     private router: Router
   ) {}
 
@@ -82,6 +93,7 @@ export class RewardsComponent {
     this.loadUsers();
     this.loadRewards();
     this.loadBonuses();
+    this.getJoinedReferral();
   }
 
   toggleAddRewardForm(): void {
@@ -110,6 +122,22 @@ export class RewardsComponent {
     document.body.classList.remove("overflow-hidden");
     this.resetForm();
   }
+
+  getJoinedReferralsForUser(userId: string): void {
+    this.referralService.getJoinedReferralsByUserId(userId).subscribe(
+      (data) => {
+        this.joinedReferrals = data;
+        console.log("Joined referrals for user:", data);
+        // Reset selected referral when user changes
+        this.selectedReferral = null;
+      },
+      (error) => {
+        console.error("Error fetching joined referrals:", error);
+        this.joinedReferrals = [];
+      }
+    );
+  }
+
 
   saveRewardAndClose(): void {
     this.saveReward();
@@ -188,7 +216,7 @@ export class RewardsComponent {
             (total, reward) => total + reward.bonusPoints,
             0
           );
-
+  
           // Show the previous totals to the user (you can add UI elements for this)
           console.log("Previous total amount:", this.previousTotalAmount);
           console.log(
@@ -202,42 +230,64 @@ export class RewardsComponent {
           this.previousTotalBonusPoints = 0;
         }
       );
+      
+      // Also fetch joined referrals for this user
+      this.getJoinedReferralsForUser(this.selectedUser._id);
     } else {
       this.previousTotalAmount = 0;
       this.previousTotalBonusPoints = 0;
+      this.joinedReferrals = [];
+      this.selectedReferral = null;
     }
+  }
+
+  getJoinedReferral(){
+    this.referralService.getJoinedReferralsByUserId(this.selectedUser?._id ?? '').subscribe(
+      (data) => {
+        // this.userRewards = data;
+        console.log("User rewards:", data);
+      }
+    );
   }
 
   saveReward(): void {
     if (
       !this.selectedUser ||
+      !this.selectedReferral ||
       this.referralAmount == null ||
       !this.paymentStatus
     ) {
       return;
     }
-
+  
     // Ensure values are converted to numbers
     const referralAmount = Number(this.referralAmount);
-
+  
     const rewardData = {
       userId: this.selectedUser._id,
+      referralId: this.selectedReferral._id, // Add referral ID
       amount: referralAmount,
       status: this.paymentStatus,
       remarks: this.remarks || "", // Use empty string if remarks is null
     };
-
+  
     const saveMethod =
       this.editMode && this.currentRewardId
         ? this.rewardService.updateReward(this.currentRewardId, rewardData)
         : this.rewardService.addReward(rewardData);
-
+  
     saveMethod.subscribe(
       () => {
         this.resetForm();
         this.loadRewards();
+        
+        // Refresh the joined referrals for this user
+        if (this.selectedUser) {
+          this.getJoinedReferralsForUser(this.selectedUser._id);
+        }
+        
         this.closeReferralModal();
-
+  
         // Load user history if modal is open
         if (this.isUserHistoryModalOpen && this.selectedUserHistory) {
           this.loadUserRewardHistory(this.selectedUserHistory._id);
@@ -257,6 +307,11 @@ export class RewardsComponent {
     this.paymentStatus = null;
     this.editMode = false;
     this.currentRewardId = null;
+    this.selectedReferral = null;
+    this.referralAmount = null;
+    this.paymentStatus = null;
+    this.remarks = "";
+    this.bonusPoints = null;
   }
 
   // User History Modal Methods
@@ -328,7 +383,7 @@ export class RewardsComponent {
     entry.editing = true;
     entry.editBonusPoints = entry.bonusPoints;
     entry.editRemarks = entry.remarks || ''; 
-    entry.editAmount = entry.amount;
+    entry.editAmount = entry.amount;  
     
     console.log('Starting edit - editBonusPoints:', entry.editBonusPoints);
     console.log('Starting edit - editRemarks:', entry.editRemarks);
@@ -520,31 +575,103 @@ calculateTotalAmount(): number {
     this.openModal();
   }
 
-  updateStatus(rewardId: string, event: Event) {
+  showStatusConfirmation(rewardId: string, event: Event) {
     // Type cast the event target to HTMLSelectElement to access the value
     const selectElement = event.target as HTMLSelectElement;
-    const status = selectElement.value as "pending" | "processing" | "paid";
-
+    const newStatus = selectElement.value as "pending" | "processing" | "paid";
+    
+    // Find the current reward to check its status
+    const currentReward = this.rewardHistory.find(reward => reward._id === rewardId);
+    
+    // If the current status is already "paid", prevent changes
+    if (currentReward && currentReward.status === "paid") {
+      // Reset the select element to "paid" value
+      selectElement.value = "paid";
+      
+      // Show notification
+      console.error('Cannot modify rewards that have already been paid');
+      return;
+    }
+    
+    // Check if we're setting to "paid" to show confirmation dialog
+    if (newStatus === "paid" && currentReward?.status !== "paid") {
+      // Store the pending change
+      this.pendingStatusChange = {
+        rewardId,
+        newStatus,
+        selectElement
+      };
+      
+      // Show confirmation dialog
+      this.showStatusConfirm = true;
+    } else {
+      // For non-paid status changes, proceed directly
+      this.processStatusUpdate(rewardId, newStatus, selectElement);
+    }
+  }
+  
+  // Cancel status change and reset select element
+  cancelStatusChange() {
+    if (this.pendingStatusChange) {
+      const currentReward = this.rewardHistory.find(
+        reward => reward._id === this.pendingStatusChange?.rewardId
+      );
+      
+      // Reset select element to original value
+      this.pendingStatusChange.selectElement.value = currentReward?.status || "pending";
+    }
+    
+    // Hide confirmation dialog
+    this.showStatusConfirm = false;
+    this.pendingStatusChange = null;
+  }
+  
+  // Confirm status change
+  confirmStatusChange() {
+    if (this.pendingStatusChange) {
+      const { rewardId, newStatus, selectElement } = this.pendingStatusChange;
+      
+      // Process the status update
+      this.processStatusUpdate(rewardId, newStatus, selectElement);
+      
+      // Hide confirmation dialog
+      this.showStatusConfirm = false;
+      this.pendingStatusChange = null;
+    }
+  }
+  
+  // New method to process status updates
+  processStatusUpdate(rewardId: string, newStatus: "pending" | "processing" | "paid", selectElement: HTMLSelectElement) {
     this.loadingStatus = rewardId;
-
-    this.rewardService.updateRewardStatus(rewardId, status).subscribe(
+  
+    this.rewardService.updateRewardStatus(rewardId, newStatus).subscribe(
       (response) => {
         this.rewardHistory = this.rewardHistory.map((reward) => {
           if (reward._id === rewardId) {
-            return { ...reward, status: status };
+            return { ...reward, status: newStatus };
           }
           return reward;
         });
-
+  
         // this.notification.success('Status updated successfully');
         this.loadingStatus = null;
       },
       (error) => {
+        // If there's an error, reset the dropdown to original value
+        const currentReward = this.rewardHistory.find(reward => reward._id === rewardId);
+        selectElement.value = currentReward?.status || "pending";
+        
         console.error("Error updating status:", error);
         // this.notification.error('Failed to update status');
         this.loadingStatus = null;
       }
     );
+  }
+  
+  // Keep the original updateStatus method for API compatibility
+  updateStatus(rewardId: string, event: Event) {
+    // This redirects to our new flow
+    this.showStatusConfirmation(rewardId, event);
   }
 
   updateStatusBonus(bonusId: string, event: Event) {

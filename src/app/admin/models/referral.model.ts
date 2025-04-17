@@ -14,4 +14,8 @@ export interface Referral {
   email: string;
   createdAt: Date;
   status: string; // Add this field
+  paymentStatus?: "pending" | "processing" | "paid" | "not-processed" | "not-eligible";
+  paymentAmount?: number;
+  paymentDate?: Date;
+  paymentRemarks?: string;
 }

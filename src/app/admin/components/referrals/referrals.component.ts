@@ -43,6 +43,22 @@ export class ReferralsComponent {
     this.getAllReferrals();
   }
 
+  getPaymentStatusClass(status: string): string {
+  switch (status) {
+    case 'paid':
+      return 'bg-green-100 text-green-800';
+    case 'processing':
+      return 'bg-yellow-100 text-yellow-800';
+    case 'pending':
+      return 'bg-blue-100 text-blue-800';
+    case 'not-processed':
+      return 'bg-gray-100 text-gray-800';
+    case 'not-eligible':
+    default:
+      return 'bg-gray-100 text-gray-500';
+  }
+}
+
 
   goBack() {
     this.router.navigate(["/admin/dashboard"]);
@@ -82,38 +98,34 @@ export class ReferralsComponent {
   }
   
   filterReferrals(): void {
-    // If no search query, just apply normal filtering
-    if (this.searchQuery.trim() === '' || this.searchType === 'nameOrMobile') {
-      // Start with all referrals
-      let result = [...this.referrals];
-      
-      // Apply search filter if there's a query
-      if (this.searchQuery.trim() !== '') {
-        const query = this.searchQuery.toLowerCase().trim();
-        result = result.filter(r => 
-          r.name.toLowerCase().includes(query) || 
-          r.mobile.includes(query) || 
-          (r.email && r.email.toLowerCase().includes(query))
-        );
-      }
-      
-      // Apply time period filter
-      result = this.applyTimeFilter(result);
-      
-      // Apply sorting
-      this.sortFilteredReferrals(result);
-      
-      // Update pagination
-      this.updatePagination();
-    } 
-    // Handle referredBy name search
-    else if (this.searchType === 'referredByName') {
-      this.searchByReferredByOnly(this.searchQuery.trim());
-    }
-    // Handle referredBy name with date range
-    else if (this.searchType === 'referredByNameWithDate') {
-      this.searchByReferredByWithDate(this.searchQuery.trim());
-    }
+    let result = [...this.referrals];
+  
+  // Apply search filter if there's a query
+  if (this.searchQuery.trim() !== '') {
+    const query = this.searchQuery.toLowerCase().trim();
+    result = result.filter(r => 
+      r.name.toLowerCase().includes(query) || 
+      r.mobile.includes(query) || 
+      (r.email && r.email.toLowerCase().includes(query))
+    );
+  }
+  
+  // Apply status filter - Fixed to make status filtering work properly
+  if (this.statusFilter && this.statusFilter !== 'All') {
+    result = result.filter(r => r.attendanceStatus === this.statusFilter);
+  }
+  
+  // Apply time period filter
+  result = this.applyTimeFilter(result);
+  
+  // Apply sorting
+  this.sortFilteredReferrals(result);
+  
+  // Update pagination
+  this.updatePagination();
+  
+  // After filtering, update status summary
+  this.updateStatusSummary();
   }
   
   applyTimeFilter(referrals: any[]): any[] {
@@ -252,6 +264,7 @@ export class ReferralsComponent {
   
   resetFilters(): void {
     this.searchQuery = '';
+    this.statusFilter = 'All';
     this.selectedTimePeriod = 'all';
     this.sortOption = 'dateDesc';
     this.currentPage = 1;
@@ -260,16 +273,23 @@ export class ReferralsComponent {
   
   updateStatusSummary(): void {
     const statusCounts: {[key: string]: number} = {};
+  
+    // Initialize common statuses to always show them even if count is 0
+    statusCounts['Not-Attended'] = 0;
+    statusCounts['Attended'] = 0;
+    statusCounts['Registered'] = 0;
+    statusCounts['Joined'] = 0;
     
-    // Count referrals by status
-    this.referrals.forEach(referral => {
+    // Count referrals by status from current filtered set
+    // Use filtered referrals instead of all referrals to show counts for current view
+    this.filteredReferrals.forEach(referral => {
       const status = referral.attendanceStatus;
       statusCounts[status] = (statusCounts[status] || 0) + 1;
     });
     
     // Convert to array format
     this.statusSummary = Object.entries(statusCounts).map(([status, count]) => ({
-      status,
+      status: status.toLowerCase(),
       count
     }));
   }
@@ -432,6 +452,11 @@ getSelectedDateRangeText(): string {
 
   logout() {
     this.router.navigate(["/auth/login"]);
+  }
+
+  registerNow() {
+    // Navigate to registration page or handle registration logic
+    this.router.navigate(['/admin/register']);
   }
 
 }

@@ -53,4 +53,8 @@ export class ReferralService {
     return this.http.get<Referral[]>(`${this.API_URL}/referral/recent`);
   }
 
+  getJoinedReferralsByUserId(userId: string): Observable<Referral[]> {
+    return this.http.get<Referral[]>(`${this.API_URL}/referral/joined-referrals/${userId}`);
+  }
+
 }

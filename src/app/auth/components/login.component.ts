@@ -147,7 +147,7 @@ import { CommonModule } from '@angular/common';
       <div class="text-center text-sm space-y-3">
         <div>
           <span class="text-gray-600">Don't have an account?</span>
-          <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500 hover:underline ml-1">Contact admin</a>
+          <a href="mailto:referralaitrich@gmail.com" class="font-medium text-indigo-600 hover:text-indigo-500 hover:underline ml-1">Contact admin</a>
         </div>
         
         <div class="text-xs text-gray-500">

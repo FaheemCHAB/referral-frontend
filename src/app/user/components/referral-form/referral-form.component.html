@@ -1,4 +1,4 @@
-<nav class="flex items-center justify-between px-6 py-4" #registrationForm>
+<nav class="flex items-center justify-between px-6 py-4" #registrationForm id="registrationForm">
   <!-- Logo -->
   <a
     href="https://aitrichacademy.com/"
@@ -790,4 +790,20 @@
     View More Success Stories
   </a>
 </div>
+<div class="fixed bottom-6 right-6 z-50">
+  <a 
+    href="#registrationForm" 
+    class="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-800 text-white font-bold rounded-full shadow-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-300 group ring-2 ring-blue-300 ring-opacity-50"
+    (click)="scrollToRegistration($event)"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 group-hover:rotate-90 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+    </svg>
+    <span>Register Now</span>
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-0 w-0 group-hover:h-5 group-hover:w-5 transition-all duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+    </svg>
+  </a>
+</div>
+
 <app-footer></app-footer>
