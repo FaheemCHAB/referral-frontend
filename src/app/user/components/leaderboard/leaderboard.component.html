@@ -1,21 +1,23 @@
 <div class="min-h-screen bg-gradient-to-br from-indigo-50 to-blue-50 py-12 px-4 font-sans">
   <div class="container mx-auto max-w-6xl">
     <!-- Header with Back and Logout Buttons -->
-    <div class="flex justify-between items-center mb-10">
+    <div class="flex flex-col sm:flex-row justify-between items-center mb-8">
       <button 
         (click)="goBack()" 
-        class="group flex items-center text-indigo-600 font-medium hover:text-indigo-800 transition-all duration-300"
+        class="group flex items-center space-x-2 text-indigo-600 font-medium hover:text-indigo-800 transition-all duration-300 bg-white px-5 py-3 rounded-xl shadow-sm hover:shadow-md"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 group-hover:-translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 group-hover:-translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
         </svg>
-        Back
+        <span>Back</span>
       </button>
       
+      <h1 class="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-indigo-600 to-blue-600 bg-clip-text text-transparent mt-4 sm:mt-0">
+        My Rewards
+      </h1>
+      
+      <div class="hidden sm:block w-32"><!-- Spacer for flex alignment --></div>
     </div>
-    <h2 class="text-xl sm:text-2xl font-bold text-center text-gray-800 mt-2 sm:mt-0 sm:ml-4">
-      <span class="text-blue-600">My</span> Rewards
-    </h2>
 
     <!-- Main Content -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
