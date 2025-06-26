@@ -5,7 +5,7 @@ import { AuthService } from "../../../auth/service/auth.service";
 import { Clipboard, ClipboardModule } from "@angular/cdk/clipboard";
 import { BehaviorSubject, Observable } from "rxjs";
 import { DashboardService } from "../../services/dashboard.service";
-import { environment } from "../../../../environments/environment.development";
+import { environment } from "../../../../environments/environment";
 
 @Component({
   selector: "app-dashboard",
